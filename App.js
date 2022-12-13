@@ -12,8 +12,13 @@ export default function App() {
     <>
       <StatusBar style="dark"/>
       <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="All Messages" component={AllMessagesScreen}/>
+        <Stack.Navigator initialRouteName="AllMessages">
+          <Stack.Screen
+            name="AllMessages"
+            component={AllMessagesScreen} 
+            options={{title: 'MESSAGES',
+              headerStyle: {backgroundColor: '#2b2b2b'},
+              headerTitleStyle: {color: '#fff'} }}/>
           <Stack.Screen name="Conversation" component={ConversationScreen}/>
         </Stack.Navigator>
       </NavigationContainer>
