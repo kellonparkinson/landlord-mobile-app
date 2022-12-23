@@ -1,5 +1,4 @@
 import { StatusBar } from "expo-status-bar"
-import { SafeAreaView } from "react-native"
 import { NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 
@@ -18,12 +17,32 @@ export default function App() {
           <Stack.Screen
             name="AllMessages"
             component={AllMessagesScreen} 
-            options={{title: 'MESSAGES',
-              headerStyle: {backgroundColor: '#2b2b2b'},
-              headerTitleStyle: {color: '#fff'} }}
+            options={{
+              title: 'MESSAGES',
+              headerStyle: {
+                backgroundColor: '#2b2b2b',
+              },
+              headerTitleStyle: {
+                color: '#fff',
+              },
+            }}
           />
 
-          <Stack.Screen name="Conversation" component={ConversationScreen}/>
+          <Stack.Screen
+            name="Conversation"
+            component={ConversationScreen}
+            options={({route}) => ({
+                title: route.params.contactName,
+                headerStyle: {
+                  backgroundColor: '#2b2b2b',
+                },
+                headerTitleStyle: {
+                  color: '#fff',
+                  fontSize: 16,
+                },
+                headerBackTitleVisible: false,
+            })}
+          />
 
         </Stack.Navigator>
       </NavigationContainer>

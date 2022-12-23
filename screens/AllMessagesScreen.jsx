@@ -1,4 +1,4 @@
-import { View, Text, FlatList } from 'react-native'
+import { View, Text, FlatList, StyleSheet } from 'react-native'
 import React from 'react'
 
 import ConversationCard from '../components/ConversationCard'
@@ -6,19 +6,23 @@ import Footer from '../components/Footer'
 import dummy from '../data/dummyData'
 
 const AllMessagesScreen = ({ navigation }) => {
-  const handlePress = () => {
-    navigation.navigate("Conversation")
-  }
-
+  
   return (
-    <View style={{
-      backgroundColor:'#bfc0c0',
-      height: '100%',
-    }}>
+    <View style={styles.screenWrapper}>
+      
       <FlatList
         data={ dummy }
         keyExtractor={(item) => item.id}
-        renderItem={({item}) => <ConversationCard data={item} onPress={handlePress}/>}
+        renderItem={({item}) => (
+          <ConversationCard
+            data={item}
+            onPress={() => (
+              navigation.navigate("Conversation",
+                {contactName: `${item.firstName} ${item.lastName}`}
+              )
+            )}
+          />
+        )}
         showsVerticalScrollIndicator={false}
       />
 
@@ -28,3 +32,10 @@ const AllMessagesScreen = ({ navigation }) => {
 }
 
 export default AllMessagesScreen
+
+const styles = StyleSheet.create({
+  screenWrapper: {
+    backgroundColor:'#bfc0c0',
+    height: '100%',
+  },
+})
