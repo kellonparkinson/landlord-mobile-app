@@ -4,7 +4,9 @@ import {
   StyleSheet,
   TextInput,
   ScrollView } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
+import { GiftedChat, Bubble, Send } from 'react-native-gifted-chat'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 const ConversationFooter = () => {
   const [textInput, setTextInput] = useState('Message')
@@ -25,37 +27,90 @@ const ConversationFooter = () => {
         <TextInput
           style={styles.messageInput}
           value={textInput}
-          onChangeText={(e) => setTextInput(e.target.value)}
+          onTextInput={(e) => setTextInput(e.target.value)}
         />
       </View>
     </View>
   )
 }
 
-const ConversationScreen = () => {
+// Individual Conversation Screen --------------- //
+const ConversationScreen = (props) => {
+  const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    setMessages([
+      {
+        _id: 1,
+        text: "Again? Okay. I'm out of town. I'll send the plumber. Maybe you should consider learning how to use a plunger.",
+        createdAt: new Date(),
+        user: {
+          _id: 1,
+          name: 'React Native',
+          avatar: 'https://placeimg.com/140/140/any',
+        },
+      },
+      {
+        _id: 2,
+        text: "Hey landlord, I plugged the toilet. It's bad.",
+        createdAt: new Date(),
+        user: {
+          _id: 2,
+          name: 'React Native',
+          avatar: 'https://placeimg.com/140/140/any',
+        },
+      },
+    ])
+  }, [])
+
+  const onSend = useCallback((messages = []) => {
+    setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
+  }, [])
+
+  const renderBubble = (props) => {
+    return (
+      <Bubble 
+        {...props}
+        wrapperStyle={{
+          right: {
+            backgroundColor: '#4f5d75',
+            borderBottomRightRadius: 0,
+          },
+          left: {
+            backgroundColor: '#e1e1e1',
+            borderBottomLeftRadius: 0,
+          },
+        }}
+        textStyle={{
+          right: {
+            color: '#fff'
+          }
+        }}
+      />
+    )
+  }
+
+  const renderSend = (props) => {
+    return (
+      <Send {...props} >
+        <View style={styles.sendBtn} >
+          <MaterialCommunityIcons name='send' size={18} color='#d1ff17' />
+        </View>
+      </Send>
+    )
+  }
+
   return (
-    <View style={styles.screenWrapper}>
-      <ScrollView style={styles.chatWrapper}>
-
-        <View style={styles.inboundMessageWrapper}>
-          <Text>Someone said something so this is their message.</Text>
-        </View>
-
-        <View style={styles.outboundMessageWrapper}>
-          <Text>Someone said something and this is my response to their message.</Text>
-        </View>
-
-        <View style={styles.inboundMessageWrapper}>
-          <Text>Someone said something in response to my response, so this is their message responding to me.</Text>
-        </View>
-
-        <View style={styles.outboundMessageWrapper}>
-          <Text>Someone responded to my response, so this is me responding to their response to my first response to their first message.</Text>
-        </View>
-
-      </ScrollView>
-        <ConversationFooter />
-    </View>
+    <GiftedChat
+      messages={messages}
+      onSend={(messages) => onSend(messages)}
+      user={{
+        _id: 1,
+      }}
+      renderBubble={renderBubble}
+      alwaysShowSend
+      renderSend={renderSend}
+    />
   )
 }
 
@@ -121,5 +176,14 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     padding: 10,
+  },
+  sendBtn: {
+    width: 32,
+    height: 32,
+    borderRadius: '50%',
+    backgroundColor: '#4f5d75',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 6,
   },
 })
