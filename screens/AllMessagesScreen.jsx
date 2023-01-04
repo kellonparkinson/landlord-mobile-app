@@ -1,4 +1,4 @@
-import { View, Text, FlatList, StyleSheet } from 'react-native'
+import { View, Text, FlatList, StyleSheet, SafeAreaView } from 'react-native'
 import React from 'react'
 
 import ConversationCard from '../components/ConversationCard'
@@ -8,7 +8,7 @@ import dummy from '../data/dummyData'
 const AllMessagesScreen = ({ navigation }) => {
   
   return (
-    <View style={styles.screenWrapper}>
+    <SafeAreaView style={styles.screenWrapper}>
       
       <FlatList
         data={ dummy }
@@ -26,8 +26,8 @@ const AllMessagesScreen = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
       />
 
-      <Footer />
-    </View>
+      {/* <Footer /> */}
+    </SafeAreaView>
   )
 }
 
@@ -35,7 +35,7 @@ export default AllMessagesScreen
 
 const styles = StyleSheet.create({
   screenWrapper: {
-    backgroundColor:'#bfc0c0',
+    backgroundColor:'#242424',
     height: '100%',
   },
 })
