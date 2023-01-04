@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     footerWrapper: {
       height: 90,
       width: '100%',
-      backgroundColor: '#2b2b2b',
+      backgroundColor: '#242424',
       position: 'absolute',
       bottom: 0,
       shadowColor: '#000',
@@ -40,5 +40,5 @@ const styles = StyleSheet.create({
     footerBtns: {
       marginHorizontal: 45,
       marginBottom: 10,
-    }
+    },
 })

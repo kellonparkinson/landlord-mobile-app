@@ -20,7 +20,7 @@ export default function App() {
             options={{
               title: 'MESSAGES',
               headerStyle: {
-                backgroundColor: '#2b2b2b',
+                backgroundColor: '#242424',
               },
               headerTitleStyle: {
                 color: '#fff',
@@ -34,7 +34,7 @@ export default function App() {
             options={({route}) => ({
                 title: route.params.contactName,
                 headerStyle: {
-                  backgroundColor: '#2b2b2b',
+                  backgroundColor: '#242424',
                 },
                 headerTitleStyle: {
                   color: '#fff',
