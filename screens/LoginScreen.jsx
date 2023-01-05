@@ -29,9 +29,16 @@ const LoginScreen = () => {
         />
       </View>
 
-      <View>
-        <Button title='Login'/>
-        <Button title='Register'/>
+      <View style={styles.btnWrapper}>
+        <Button
+          containerStyle={styles.button}
+          title='Login'
+        />
+        <Button
+          containerStyle={styles.button}
+          type='outline'
+          title='Register'
+        />
       </View>
     </View>
   )
@@ -52,7 +59,12 @@ const styles = StyleSheet.create({
       borderRadius: 18,
     },
     inputContainer: {
-      backgroundColor: '#e1e1e1',
       width: 250,
+    },
+    btnWrapper: {
+      width: '100%',
+    },
+    button: {
+      
     },
 })
