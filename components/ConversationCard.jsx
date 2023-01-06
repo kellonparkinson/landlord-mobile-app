@@ -1,9 +1,9 @@
-import { View, Text, Image, TouchableHighlight, StyleSheet } from 'react-native'
+import { View, Text, Image, Pressable, StyleSheet } from 'react-native'
 import React from 'react'
 
 const ConversationCard = ({ data, onPress }) => {
   return (
-    <TouchableHighlight onPress={onPress}>
+    <Pressable onPress={onPress}>
         <View style={styles.conversationCard}>
             <View style={styles.contactIcon}>
                 <Image
@@ -20,7 +20,7 @@ const ConversationCard = ({ data, onPress }) => {
                 </Text>
             </View>
         </View>
-    </TouchableHighlight>
+    </Pressable>
   )
 }
 

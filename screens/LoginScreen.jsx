@@ -1,10 +1,14 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, Pressable } from 'react-native'
 import React, { useState } from 'react'
 import { Button, Input, Image } from 'react-native-elements'
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
+  const handleLogin = () => {
+
+  }
 
   return (
     <View style={styles.screenWrapper}>
@@ -30,15 +34,19 @@ const LoginScreen = () => {
       </View>
 
       <View style={styles.btnWrapper}>
-        <Button
-          containerStyle={styles.button}
-          title='Login'
-        />
-        <Button
-          containerStyle={styles.button}
-          type='outline'
-          title='Register'
-        />
+        <Pressable
+          style={styles.loginBtn}
+          onPress={handleLogin}
+        >
+          <Text style={{ color: '#d1ff17', fontSize: 22, fontWeight: '600' }}>Login</Text>
+        </Pressable>
+
+        <Pressable
+          style={styles.registerBtn}
+          onPress={() => navigation.navigate('Register')}
+        >
+          <Text style={{ color: '#242424', fontSize: 22, fontWeight: '600' }}>Register</Text>
+        </Pressable>
       </View>
     </View>
   )
@@ -64,7 +72,19 @@ const styles = StyleSheet.create({
     btnWrapper: {
       width: '100%',
     },
-    button: {
-      
+    loginBtn: {
+      width: '100%',
+      height: 48,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: '#242424',
+    },
+    registerBtn: {
+      width: '100%',
+      height: 48,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderBottomWidth: 2,
+      borderColor: '#e1e1e1'
     },
 })
