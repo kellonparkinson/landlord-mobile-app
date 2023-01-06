@@ -43,7 +43,7 @@ export default function App() {
       <StatusBar style="light"/>
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="Login"
+          initialRouteName="Register"
           screenOptions={globalScreenOptions}
         >
 

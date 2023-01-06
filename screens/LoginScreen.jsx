@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native'
 import React, { useState } from 'react'
-import { Button, Input, Image } from 'react-native-elements'
+import { Input, Image } from 'react-native-elements'
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('')
@@ -45,7 +45,7 @@ const LoginScreen = () => {
           style={styles.registerBtn}
           onPress={() => navigation.navigate('Register')}
         >
-          <Text style={{ color: '#242424', fontSize: 22, fontWeight: '600' }}>Register</Text>
+          <Text style={{ color: '#242424', fontSize: 20, fontWeight: '400' }}>Register</Text>
         </Pressable>
       </View>
     </View>
@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
       width: 200,
       height: 200,
       borderRadius: 18,
+      marginBottom: 20,
     },
     inputContainer: {
       width: 250,
