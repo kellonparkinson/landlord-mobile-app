@@ -18,6 +18,7 @@ const AllMessagesScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.screenWrapper}>
       
+      {/* Don't forget to build a search bar somewhere on this page... Flatlist header component? */}
       <FlatList
         data={ dummy }
         keyExtractor={(item) => item.id}
