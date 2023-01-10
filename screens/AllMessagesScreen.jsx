@@ -3,7 +3,7 @@ import React, { useLayoutEffect } from 'react'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import ConversationCard from '../components/ConversationCard'
-import Footer from '../components/Footer'
+// import Footer from '../components/Footer'
 import dummy from '../data/dummyData'
 
 const AllMessagesScreen = ({ navigation }) => {
@@ -19,6 +19,7 @@ const AllMessagesScreen = ({ navigation }) => {
     <SafeAreaView style={styles.screenWrapper}>
       
       {/* Don't forget to build a search bar somewhere on this page... Flatlist header component? */}
+
       <FlatList
         data={ dummy }
         keyExtractor={(item) => item.id}
@@ -26,9 +27,10 @@ const AllMessagesScreen = ({ navigation }) => {
           <ConversationCard
             data={item}
             onPress={() => (
-              navigation.navigate("Conversation",
-                {contactName: `${item.firstName} ${item.lastName}`}
-              )
+              navigation.navigate("Conversation", {
+                contactName: `${item.firstName} ${item.lastName}`,
+                contactPhoto: item.contactPhoto
+              })
             )}
           />
         )}

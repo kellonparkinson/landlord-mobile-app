@@ -10,6 +10,7 @@ const ConversationCard = ({ data, onPress }) => {
                 <Avatar
                     source={data.contactPhoto}
                     style={{width: '100%', height: '100%'}}
+                    rounded
                 />
             </View>
             <ListItem.Content>

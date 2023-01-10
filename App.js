@@ -112,10 +112,10 @@ export default function App() {
           <Stack.Screen
             name="Conversation"
             component={ConversationScreen}
-            options={({route}) => ({
-              title: route.params.contactName,
-              headerBackTitleVisible: false,
-            })}
+            // options={({route}) => ({
+            //   title: route.params.contactName,
+            //   headerBackTitleVisible: false,
+            // })}
           />
 
           <Stack.Screen

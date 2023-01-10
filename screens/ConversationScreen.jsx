@@ -4,38 +4,51 @@ import {
   StyleSheet,
   TextInput,
   ScrollView } from 'react-native'
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useLayoutEffect } from 'react'
 import { GiftedChat, Bubble, Send } from 'react-native-gifted-chat'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { Avatar } from 'react-native-elements'
 
-const ConversationFooter = () => {
-  const [textInput, setTextInput] = useState('Message')
+// const ConversationFooter = () => {
+//   const [textInput, setTextInput] = useState('Message')
 
-  return (
-    <View style={styles.footer}>
+//   return (
+//     <View style={styles.footer}>
 
-      {/* These are temporary */}
-      <View style={styles.footerIcon}>
-        <Text style={{color: '#d1ff17', fontSize: 30, fontWeight: '900'}}>X</Text>
-      </View>
-      <View style={styles.footerIcon}>
-        <Text style={{color: '#d1ff17', fontSize: 30, fontWeight: '900'}}>X</Text>
-      </View>
-      {/* -------------------------- */}
+//       {/* These are temporary */}
+//       <View style={styles.footerIcon}>
+//         <Text style={{color: '#d1ff17', fontSize: 30, fontWeight: '900'}}>X</Text>
+//       </View>
+//       <View style={styles.footerIcon}>
+//         <Text style={{color: '#d1ff17', fontSize: 30, fontWeight: '900'}}>X</Text>
+//       </View>
+//       {/* -------------------------- */}
 
-      <View style={styles.inputWrapper}>
-        <TextInput
-          style={styles.messageInput}
-          value={textInput}
-          onTextInput={(e) => setTextInput(e.target.value)}
-        />
-      </View>
-    </View>
-  )
-}
+//       <View style={styles.inputWrapper}>
+//         <TextInput
+//           style={styles.messageInput}
+//           value={textInput}
+//           onTextInput={(e) => setTextInput(e.target.value)}
+//         />
+//       </View>
+//     </View>
+//   )
+// }
 
 // Individual Conversation Screen --------------- //
-const ConversationScreen = (props) => {
+const ConversationScreen = ({ navigation, route }) => {
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerBackTitleVisible: false,
+      headerTitle: () => (
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Avatar rounded source={route.params.contactPhoto} style={{ width: 30, height: 30, marginRight: 10 }} />
+          <Text style={{ color: '#fff', fontSize: 18 }}>{route.params.contactName}</Text>
+        </View>
+      ),
+    })
+  }, [navigation])
+
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
