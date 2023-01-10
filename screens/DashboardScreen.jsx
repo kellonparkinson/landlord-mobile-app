@@ -3,31 +3,41 @@ import React, { useState } from 'react'
 
 const DashboardScreen = () => {
   const [numScheduled, setNumScheduled] = useState(0)
+  const [unread, setUnread] = useState(0)
   const [username, setUsername] = useState('Kellon')
 
   return (
     <ScrollView style={styles.screenWrapper}>
-      <View style={{ width: 300, height: 50, backgroundColor: '#555555'}}>
-        <TextInput placeholder='Search'/>
+      <View style={styles.inputContainer}>
+        <View style={{ width: 300, height: 50, backgroundColor: '#555555'}}>
+          <TextInput placeholder='Search'/>
+        </View>
       </View>
 
       <View>
-        <Text>You have {numScheduled} scheduled messages, {username}.</Text>
+        <Text>Welcome, {username}.</Text>
+      </View>
+
+      <View>
+        <Text>Messaging Tools</Text>
       </View>
 
       <View style={styles.mainModWrapper}>
         <View style={styles.module}>
-          <Text>Scheduler</Text>
+          <Text>Message Scheduler</Text>
+          <Text>{numScheduled} scheduled messages</Text>
         </View>
+
         <View style={styles.module}>
-          <Text>Templates</Text>
+          <Text>Message Templates</Text>
         </View>
       </View>
 
       <View style={styles.smallModWrapper}>
         <View style={styles.smallModule}>
-          <Text>Contacts</Text>
+          <Text>Manage Contacts</Text>
         </View>
+
         <View style={styles.smallModule}>
           <Text>Settings</Text>
         </View>
@@ -44,17 +54,23 @@ const styles = StyleSheet.create({
     backgroundColor: '#3e3e3e',
     flex: 1
   },
+  inputContainer: {
+    margin: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   mainModWrapper: {
-    height: 200,
+    height: 450,
     width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
   },
   module: {
-    width: '45%',
-    height: '100%',
-    backgroundColor: '#bfc0c0',
+    width: '95%',
+    height: '45%',
+    backgroundColor: '#d1ff17',
     borderRadius: 18,
+    borderBottomRightRadius: 0,
   },
   smallModWrapper: {
     width: '100%',
