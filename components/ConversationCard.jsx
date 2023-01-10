@@ -1,26 +1,27 @@
-import { View, Text, Image, TouchableHighlight, StyleSheet } from 'react-native'
+import { View, Text, Image, Pressable, StyleSheet } from 'react-native'
 import React from 'react'
+import { Avatar, ListItem } from 'react-native-elements'
 
 const ConversationCard = ({ data, onPress }) => {
   return (
-    <TouchableHighlight onPress={onPress}>
+    <Pressable onPress={onPress}>
         <View style={styles.conversationCard}>
             <View style={styles.contactIcon}>
-                <Image
+                <Avatar
                     source={data.contactPhoto}
                     style={{width: '100%', height: '100%'}}
                 />
             </View>
-            <View>
-                <Text style={styles.cardTitle}>
+            <ListItem.Content>
+                <ListItem.Title style={styles.cardTitle}>
                     {data.firstName} {data.lastName}
-                </Text>
-                <Text style={styles.cardText}>
+                </ListItem.Title>
+                <ListItem.Subtitle numberOfLines={2} style={styles.cardText}>
                     {data.message}
-                </Text>
-            </View>
+                </ListItem.Subtitle>
+            </ListItem.Content>
         </View>
-    </TouchableHighlight>
+    </Pressable>
   )
 }
 

@@ -64,7 +64,7 @@ const ConversationScreen = (props) => {
   }, [])
 
   const onSend = useCallback((messages = []) => {
-    setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
+    setMessages((previousMessages) => GiftedChat.append(previousMessages, messages))
   }, [])
 
   const renderBubble = (props) => {

@@ -5,7 +5,7 @@ const dummy = [
         id: 1,
         firstName: 'Walter',
         lastName: 'White',
-        message: "What's up man! How are things going? Been a while.",
+        message: "What's up man! How are things going? Been a while. Test text to check for overflow",
         contactPhoto: assets.walterwhite,
         time: '2:38pm',
     },

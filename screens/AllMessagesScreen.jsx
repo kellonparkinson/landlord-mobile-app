@@ -1,15 +1,24 @@
-import { View, Text, FlatList, StyleSheet } from 'react-native'
-import React from 'react'
+import { View, Text, FlatList, StyleSheet, SafeAreaView, Pressable } from 'react-native'
+import React, { useLayoutEffect } from 'react'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import ConversationCard from '../components/ConversationCard'
 import Footer from '../components/Footer'
 import dummy from '../data/dummyData'
 
 const AllMessagesScreen = ({ navigation }) => {
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => <Pressable style={{ marginRight: 20 }} onPress={() => navigation.navigate('NewMessage')}>
+        <MaterialCommunityIcons name='pencil-outline' size={28} color='#d1ff17' />
+      </Pressable>
+    })
+  }, [])
   
   return (
-    <View style={styles.screenWrapper}>
+    <SafeAreaView style={styles.screenWrapper}>
       
+      {/* Don't forget to build a search bar somewhere on this page... Flatlist header component? */}
       <FlatList
         data={ dummy }
         keyExtractor={(item) => item.id}
@@ -26,8 +35,8 @@ const AllMessagesScreen = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
       />
 
-      <Footer />
-    </View>
+      {/* <Footer /> */}
+    </SafeAreaView>
   )
 }
 
@@ -35,7 +44,7 @@ export default AllMessagesScreen
 
 const styles = StyleSheet.create({
   screenWrapper: {
-    backgroundColor:'#bfc0c0',
+    backgroundColor:'#242424',
     height: '100%',
   },
 })
