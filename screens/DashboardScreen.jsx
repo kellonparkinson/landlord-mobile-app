@@ -74,13 +74,14 @@ const styles = StyleSheet.create({
   },
   smallModWrapper: {
     width: '100%',
-    height: 250,
+    height: 90,
+    flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
   },
   smallModule: {
-    width: '95%',
-    height: 90,
+    width: '46%',
+    height: '100%',
     borderRadius: 18,
     backgroundColor: '#bfc0c0'
   },

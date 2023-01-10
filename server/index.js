@@ -2,11 +2,11 @@
 // Set environment variables for your credentials
 // Read more at http://twil.io/secure
 require('dotenv').config()
-const accountSid = "ACa641db90cc07cae6e998a96854e0a5e3"
+const accountSid = process.env.TWILIO_ACCOUNT_SID
 const authToken = process.env.TWILIO_AUTH_TOKEN
 
-const twilio = require('twilio')
-const client = new twilio(accountSid, authToken)
+// const twilio = require('twilio')
+const client = require('twilio')(accountSid, authToken)
 
 client.messages
   .create({
