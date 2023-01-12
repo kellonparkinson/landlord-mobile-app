@@ -27,7 +27,7 @@ const { sendMessage } = require('./controllers/twilio')
 // Initialize Firebase
 // const app = initializeApp(firebaseConfig);
 
-server.post('/send', sendMessage)
+server.post('/send-sms', sendMessage)
 
 
 server.listen(4000, console.log('Listening on 4000'))

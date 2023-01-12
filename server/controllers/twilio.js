@@ -15,7 +15,7 @@ const client = new twilio(accountSid, authToken)
 
 module.exports = {
     sendMessage: (req, res) => {
-        const { body, from, to } = req.messageBody
+        const { body, from, to } = req.body
 
         client.messages
             .create({
@@ -27,8 +27,9 @@ module.exports = {
                 console.log(message.sid)
                 res.send('Message sent!')
             })
-            .catch((err) => {
-                res.status(400).send('Error with twilio')
-            })
+            // .catch((err) => {
+            //     console.log(err)
+            //     res.status(400).send('Error with twilio')
+            // })
     },
 }

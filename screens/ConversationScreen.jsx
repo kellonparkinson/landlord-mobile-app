@@ -26,18 +26,18 @@ const ConversationScreen = ({ navigation, route }) => {
     Keyboard.dismiss()
     
     let messageBody = {
-      body: {messageInput},
-      from: "+17657197328",
+      body: messageInput,
+      from: "+13854627888",
       to: "+12088812229"
     }
 
     axios
-      .post('/send', messageBody)
+      .post('http://192.168.1.9:4000/send-sms', messageBody)
       .then((res) => {
         console.log(res.data)
         setMessageInput('')
       })
-      .catch((err) => console.log(err))
+      .catch((err) => console.log(err, 'AXIOS ERROR!!'))
   }
 
   useLayoutEffect(() => {
