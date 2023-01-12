@@ -8,38 +8,36 @@ const DashboardScreen = () => {
 
   return (
     <ScrollView style={styles.screenWrapper}>
+      <View style={{ margin: 12 }}>
+        <Text style={styles.header}>Welcome, {username}.</Text>
+      </View>
+
       <View style={styles.inputContainer}>
-        <View style={{ width: 300, height: 50, backgroundColor: '#555555'}}>
-          <TextInput placeholder='Search'/>
-        </View>
+          <TextInput style={styles.input} placeholder='Search' placeholderTextColor='#a4a4a4' />
       </View>
 
-      <View>
-        <Text>Welcome, {username}.</Text>
-      </View>
-
-      <View>
-        <Text>Messaging Tools</Text>
+      <View style={{ marginHorizontal: 12, marginTop: 12 }}>
+        <Text style={styles.header}>Messaging Tools</Text>
       </View>
 
       <View style={styles.mainModWrapper}>
         <View style={styles.module}>
-          <Text>Message Scheduler</Text>
+          <Text style={styles.subHeading}>Scheduler</Text>
           <Text>{numScheduled} scheduled messages</Text>
         </View>
 
         <View style={styles.module}>
-          <Text>Message Templates</Text>
+          <Text style={styles.subHeading}>Templates</Text>
         </View>
       </View>
 
       <View style={styles.smallModWrapper}>
         <View style={styles.smallModule}>
-          <Text>Manage Contacts</Text>
+          <Text style={styles.subHeading}>Manage Contacts</Text>
         </View>
 
         <View style={styles.smallModule}>
-          <Text>Settings</Text>
+          <Text style={styles.subHeading}>Settings</Text>
         </View>
       </View>
 
@@ -55,9 +53,19 @@ const styles = StyleSheet.create({
     flex: 1
   },
   inputContainer: {
-    margin: 10,
     justifyContent: 'center',
     alignItems: 'center',
+    width: '100%',
+    height: 50
+  },
+  input: {
+    width: '80%',
+    height: '100%',
+    borderRadius: 18,
+    backgroundColor: '#555555',
+    paddingLeft: 10,
+    color: '#fff',
+    fontSize: 16
   },
   mainModWrapper: {
     height: 450,
@@ -84,5 +92,16 @@ const styles = StyleSheet.create({
     height: '100%',
     borderRadius: 18,
     backgroundColor: '#bfc0c0'
+  },
+  header: {
+    color: '#fff',
+    fontSize: 22,
+    fontWeight: '600',
+  },
+  subHeading: {
+    color: '#000',
+    fontSize: 18,
+    fontWeight: '600',
+    margin: 10,
   },
 })

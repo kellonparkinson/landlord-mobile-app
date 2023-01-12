@@ -2,41 +2,44 @@ import {
   View,
   Text,
   StyleSheet,
+  Pressable,
+  SafeAreaView,
+  KeyboardAvoidingView,
+  Keyboard,
+  ScrollView,
   TextInput,
-  ScrollView } from 'react-native'
+  TouchableWithoutFeedback } from 'react-native'
 import React, { useState, useEffect, useCallback, useLayoutEffect } from 'react'
 import { GiftedChat, Bubble, Send } from 'react-native-gifted-chat'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { MaterialCommunityIcons, MaterialIcons, Ionicons } from '@expo/vector-icons'
 import { Avatar } from 'react-native-elements'
-
-// const ConversationFooter = () => {
-//   const [textInput, setTextInput] = useState('Message')
-
-//   return (
-//     <View style={styles.footer}>
-
-//       {/* These are temporary */}
-//       <View style={styles.footerIcon}>
-//         <Text style={{color: '#d1ff17', fontSize: 30, fontWeight: '900'}}>X</Text>
-//       </View>
-//       <View style={styles.footerIcon}>
-//         <Text style={{color: '#d1ff17', fontSize: 30, fontWeight: '900'}}>X</Text>
-//       </View>
-//       {/* -------------------------- */}
-
-//       <View style={styles.inputWrapper}>
-//         <TextInput
-//           style={styles.messageInput}
-//           value={textInput}
-//           onTextInput={(e) => setTextInput(e.target.value)}
-//         />
-//       </View>
-//     </View>
-//   )
-// }
+import axios from 'axios'
 
 // Individual Conversation Screen --------------- //
 const ConversationScreen = ({ navigation, route }) => {
+  const [messages, setMessages] = useState([])
+  const [messageInput, setMessageInput] = useState('')
+  
+  const handleDotsPress = () => {}
+
+  const sendMessage = () => {
+    Keyboard.dismiss()
+    
+    let messageBody = {
+      body: {messageInput},
+      from: "+17657197328",
+      to: "+12088812229"
+    }
+
+    axios
+      .post('/send', messageBody)
+      .then((res) => {
+        console.log(res.data)
+        setMessageInput('')
+      })
+      .catch((err) => console.log(err))
+  }
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerBackTitleVisible: false,
@@ -46,157 +49,84 @@ const ConversationScreen = ({ navigation, route }) => {
           <Text style={{ color: '#fff', fontSize: 18 }}>{route.params.contactName}</Text>
         </View>
       ),
+      headerLeft: () => (
+        <Pressable onPress={() => navigation.goBack()}>
+          <MaterialIcons name='arrow-back-ios' size={24} color='#d1ff17'/>
+        </Pressable>
+      ),
+      headerRight: () => (
+        <Pressable onPress={handleDotsPress}>
+          <MaterialCommunityIcons name='dots-horizontal' size={24} color='#d1ff17'/>
+        </Pressable>
+      ),
     })
   }, [navigation])
 
-  const [messages, setMessages] = useState([]);
-
-  useEffect(() => {
-    setMessages([
-      {
-        _id: 1,
-        text: "Again? Okay. I'm out of town. I'll send the plumber. Maybe you should consider learning how to use a plunger.",
-        createdAt: new Date(),
-        user: {
-          _id: 1,
-          name: 'React Native',
-          avatar: 'https://placeimg.com/140/140/any',
-        },
-      },
-      {
-        _id: 2,
-        text: "Hey landlord, I plugged the toilet. It's bad.",
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: 'React Native',
-          avatar: 'https://placeimg.com/140/140/any',
-        },
-      },
-    ])
-  }, [])
-
-  const onSend = useCallback((messages = []) => {
-    setMessages((previousMessages) => GiftedChat.append(previousMessages, messages))
-  }, [])
-
-  const renderBubble = (props) => {
-    return (
-      <Bubble 
-        {...props}
-        wrapperStyle={{
-          right: {
-            backgroundColor: '#4f5d75',
-            borderBottomRightRadius: 0,
-          },
-          left: {
-            backgroundColor: '#e1e1e1',
-            borderBottomLeftRadius: 0,
-          },
-        }}
-        textStyle={{
-          right: {
-            color: '#fff'
-          }
-        }}
-      />
-    )
-  }
-
-  const renderSend = (props) => {
-    return (
-      <Send {...props} >
-        <View style={styles.sendBtn} >
-          <MaterialCommunityIcons name='send' size={18} color='#d1ff17' />
-        </View>
-      </Send>
-    )
-  }
-
   return (
-    <GiftedChat
-      messages={messages}
-      onSend={(messages) => onSend(messages)}
-      user={{
-        _id: 1,
-      }}
-      renderBubble={renderBubble}
-      alwaysShowSend
-      renderSend={renderSend}
-    />
+    <SafeAreaView style={styles.safeArea}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.screenWrapper}
+        keyboardVerticalOffset={90}
+      >
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+          <>
+            <ScrollView>
+
+            </ScrollView>
+
+            <View style={styles.footer}>
+                <TextInput
+                    style={styles.input}
+                    value={messageInput}
+                    onChangeText={(text) => setMessageInput(text)}
+                    placeholder='Message'
+                    placeholderTextColor='#bfc0c0'
+                />
+                <Pressable style={styles.sendBtn} onPress={messageInput !== '' ? sendMessage : () => Keyboard.dismiss()}>
+                  {messageInput === '' ? <Ionicons name='arrow-up-circle-outline' size={32} color='#bfc0c0' /> : <Ionicons name='arrow-up-circle-sharp' size={32} color='#d1ff17' />}
+                </Pressable>
+            </View>
+          </>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   )
 }
 
 export default ConversationScreen
 
 const styles = StyleSheet.create({
-  screenWrapper: {
+  safeArea: {
     backgroundColor:'#3e3e3e',
-    height: '100%',
-    width: '100%',
+    flex: 1,
+  },
+  screenWrapper: {
+    flex: 1,
   },
   footer: {
-    height: 90,
     width: '100%',
-    backgroundColor: '#2b2b2b',
-    position: 'absolute',
-    bottom: 0,
     flexDirection: 'row',
-    justifyContent: 'space-around',
     alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingBottom: 10,
+    justifyContent: 'space-evenly',
+    padding: 10,
+    marginBottom: 10,
   },
-  inputWrapper: {
-    width: '70%',
+  input: {
+    bottom: 0,
     height: 40,
-  },
-  messageInput: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: '#3e3e3e',
-    color: '#bfc0c0',
+    flex: 1,
+    backgroundColor: '#686868',
+    color: '#fff',
+    fontSize: 16,
     borderRadius: 25,
-    paddingHorizontal: 16,
-  },
-  footerIcon: {
-    height: 40,
-    width: 40,
-    backgroundColor: '#3e3e3e',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  chatWrapper: {
-    height: '100%',
-    width: '100%',
-  },
-  inboundMessageWrapper: {
-    flexWrap: 'wrap',
-    maxWidth: '70%',
-    minWidth: 10,
-    minHeight: 10,
-    backgroundColor: '#bfc0c0',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    padding: 10,
-  },
-  outboundMessageWrapper: {
-    flexWrap: 'wrap',
-    maxWidth: '70%',
-    minWidth: 10,
-    minHeight: 10,
-    backgroundColor: '#4f5d75',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    padding: 10,
+    padding: 12,
+    marginHorizontal: 10,
   },
   sendBtn: {
-    width: 32,
-    height: 32,
-    borderRadius: '50%',
-    backgroundColor: '#4f5d75',
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: 6,
+    marginHorizontal: 10,
   },
+  chatWrapper: {},
+  inboundMessageWrapper: {},
+  outboundMessageWrapper: {},
 })

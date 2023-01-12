@@ -10,7 +10,7 @@ import DashboardScreen from './screens/DashboardScreen'
 import LoginScreen from "./screens/LoginScreen"
 import RegisterScreen from './screens/RegisterScreen'
 import ContactsScreen from './screens/ContactsScreen'
-import NewMessage from "./screens/NewMessage"
+import NewMessageScreen from "./screens/NewMessageScreen"
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -103,19 +103,9 @@ export default function App() {
             options={{ headerShown: false }}
           />
 
-          {/* <Stack.Screen
-            name="AllMessages"
-            component={AllMessagesScreen} 
-            options={{ title: 'Messages' }}
-          /> */}
-
           <Stack.Screen
             name="Conversation"
             component={ConversationScreen}
-            // options={({route}) => ({
-            //   title: route.params.contactName,
-            //   headerBackTitleVisible: false,
-            // })}
           />
 
           <Stack.Screen
@@ -132,7 +122,7 @@ export default function App() {
 
           <Stack.Screen
             name="NewMessage"
-            component={NewMessage}
+            component={NewMessageScreen}
             options={{ title: 'New Message'}}
           />
 

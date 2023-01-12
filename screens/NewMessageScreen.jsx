@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native'
 import React, { useLayoutEffect } from 'react'
 
-const NewMessage = ({ navigation }) => {
+const NewMessageScreen = ({ navigation }) => {
     useLayoutEffect(() => {
         navigation.setOptions({
             headerLeft: () => <Pressable onPress={() => navigation.goBack()}>
@@ -19,6 +19,6 @@ const NewMessage = ({ navigation }) => {
   )
 }
 
-export default NewMessage
+export default NewMessageScreen
 
 const styles = StyleSheet.create({})

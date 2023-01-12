@@ -3,7 +3,6 @@ import React, { useLayoutEffect } from 'react'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import ConversationCard from '../components/ConversationCard'
-// import Footer from '../components/Footer'
 import dummy from '../data/dummyData'
 
 const AllMessagesScreen = ({ navigation }) => {
