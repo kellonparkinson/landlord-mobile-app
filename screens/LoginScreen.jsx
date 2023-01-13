@@ -1,10 +1,13 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { Input, Image } from 'react-native-elements'
 
 const LoginScreen = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  // const [email, setEmail] = useState('')
+  // const [password, setPassword] = useState('')
+
+  const usernameRef = useRef()
+  const passwordRef = useRef()
 
   const handleLogin = () => {
 
@@ -19,10 +22,11 @@ const LoginScreen = () => {
       <View style={styles.inputContainer}>
         <Input
           style={styles.input}
-          placeholder='Email'
-          type='email'
+          placeholder='Name'
+          type='name'
           autoFocus
           onChangeText={(text) => setEmail(text)}
+          ref={usernameRef}
         />
         <Input
           style={styles.input}
@@ -30,6 +34,7 @@ const LoginScreen = () => {
           type='password'
           secureTextEntry
           onChangeText={(text) => setPassword(text)}
+          ref={passwordRef}
         />
       </View>
 

@@ -1,5 +1,5 @@
-import { getFirestore } from 'firebase/firestore'
-import { doc, addDoc, getDocs, getDoc, updateDoc, deleteDoc, collection } from 'firebase/firestore'
+import { getFirestore, Timestamp, FieldValue } from 'firebase/firestore'
+import { doc, addDoc, getDocs, getDoc, updateDoc, deleteDoc, setDoc, collection } from 'firebase/firestore'
 import { initializeApp } from "firebase/app"
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -18,6 +18,6 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-export const database = getFirestore(app)
-
-export { doc, addDoc, getDocs, getDoc, updateDoc, deleteDoc, collection }
+// Initialize and export firestore
+export const db = getFirestore(app)
+export { doc, addDoc, getDocs, getDoc, updateDoc, deleteDoc, setDoc, collection }

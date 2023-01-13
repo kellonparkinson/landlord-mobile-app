@@ -14,6 +14,9 @@ import { GiftedChat, Bubble, Send } from 'react-native-gifted-chat'
 import { MaterialCommunityIcons, MaterialIcons, Ionicons } from '@expo/vector-icons'
 import { Avatar } from 'react-native-elements'
 import axios from 'axios'
+import { serverTimestamp } from 'firebase/firestore'
+import { db } from '../FirebaseConfig'
+import { doc, addDoc, getDocs, getDoc, updateDoc, deleteDoc, setDoc, collection } from '../FirebaseConfig'
 
 // Individual Conversation Screen --------------- //
 const ConversationScreen = ({ navigation, route }) => {
@@ -22,14 +25,20 @@ const ConversationScreen = ({ navigation, route }) => {
   
   const handleDotsPress = () => {}
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     Keyboard.dismiss()
+
     
     let messageBody = {
       body: messageInput,
       from: "+13854627888",
       to: "+12088812229"
     }
+
+    await setDoc(doc(db, 'messages', 'sent'), {
+      ...messageBody,
+      timestamp: serverTimestamp()
+    })
 
     axios
       .post('http://192.168.1.9:4000/send-sms', messageBody)
