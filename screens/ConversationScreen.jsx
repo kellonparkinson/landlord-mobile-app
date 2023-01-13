@@ -50,7 +50,8 @@ const ConversationScreen = ({ navigation, route }) => {
 
     await addDoc(collection(conversationRef, route.params.contactName), {
       ...messageBody,
-      timestamp: serverTimestamp()
+      timestamp: serverTimestamp(),
+      scheduled: false
     })
 
     axios
@@ -118,8 +119,17 @@ const ConversationScreen = ({ navigation, route }) => {
             >
               {messages.map(({id, data}) => (
                 data.from === '+13854627888' ? (
-                  <View key={id} style={styles.outbound}>
+                  <View key={id} style={data.scheduled === true ? styles.outboundScheduled : styles.outbound}>
                     <Text style={styles.outboundText}>{data.body}</Text>
+                    {data.scheduled === true ? (
+                      <MaterialCommunityIcons 
+                        style={{ alignSelf: 'flex-end', position: 'absolute', marginHorizontal: 12, bottom: -3, right: -32 }}
+                        name='lightning-bolt'
+                        size={16}
+                        color='#d1ff17'
+                      />
+                      ): null
+                    }
                   </View>
                 ) : (
                   <View key={id} style={styles.inbound}>
@@ -195,8 +205,8 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 0,
     alignSelf: 'flex-end',
     marginVertical: 10,
-    marginHorizontal: 12,
-    maxWidth: '85%',
+    marginRight: 12,
+    maxWidth: '80%',
     position: 'relative',
   },
   outboundText: {
@@ -217,5 +227,18 @@ const styles = StyleSheet.create({
   inboundText: {
     color: '#000',
     fontSize: 14.5,
+  },
+  outboundScheduled: {
+    backgroundColor: '#4f5d75',
+    borderWidth: 2,
+    borderColor: '#d1ff17',
+    padding: 12,
+    borderRadius: 18,
+    borderBottomRightRadius: 0,
+    alignSelf: 'flex-end',
+    marginVertical: 10,
+    marginRight: 20,
+    maxWidth: '80%',
+    position: 'relative',
   },
 })

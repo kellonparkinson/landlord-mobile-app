@@ -14,7 +14,7 @@ const dummy = [
         firstName: 'Kellon',
         lastName: 'Parkinson',
         message: "What's up man! How are things going? Been a while.",
-        contactPhoto: assets.deadpool,
+        contactPhoto: assets.kellon,
         time: '2:38pm',
     },
     {
