@@ -1,5 +1,16 @@
 import { getFirestore, Timestamp, FieldValue } from 'firebase/firestore'
-import { doc, addDoc, getDocs, getDoc, updateDoc, deleteDoc, setDoc, collection } from 'firebase/firestore'
+import { 
+  doc,
+  addDoc,
+  getDocs,
+  getDoc,
+  updateDoc,
+  deleteDoc,
+  setDoc,
+  collection,
+  onSnapshot,
+  orderBy,
+  query } from 'firebase/firestore'
 import { initializeApp } from "firebase/app"
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -20,4 +31,4 @@ const app = initializeApp(firebaseConfig);
 
 // Initialize and export firestore
 export const db = getFirestore(app)
-export { doc, addDoc, getDocs, getDoc, updateDoc, deleteDoc, setDoc, collection }
+export { doc, addDoc, getDocs, getDoc, updateDoc, deleteDoc, setDoc, collection, onSnapshot, orderBy, query }

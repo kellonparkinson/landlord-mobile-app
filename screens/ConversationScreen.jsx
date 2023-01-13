@@ -9,25 +9,38 @@ import {
   ScrollView,
   TextInput,
   TouchableWithoutFeedback } from 'react-native'
-import React, { useState, useEffect, useCallback, useLayoutEffect } from 'react'
+import React, { useState, useRef, useLayoutEffect } from 'react'
 import { GiftedChat, Bubble, Send } from 'react-native-gifted-chat'
 import { MaterialCommunityIcons, MaterialIcons, Ionicons } from '@expo/vector-icons'
 import { Avatar } from 'react-native-elements'
 import axios from 'axios'
 import { serverTimestamp } from 'firebase/firestore'
 import { db } from '../FirebaseConfig'
-import { doc, addDoc, getDocs, getDoc, updateDoc, deleteDoc, setDoc, collection } from '../FirebaseConfig'
+import { 
+  doc,
+  addDoc,
+  getDocs,
+  getDoc,
+  updateDoc,
+  deleteDoc,
+  setDoc,
+  collection,
+  onSnapshot,
+  orderBy,
+  query } from '../FirebaseConfig'
 
 // Individual Conversation Screen --------------- //
 const ConversationScreen = ({ navigation, route }) => {
   const [messages, setMessages] = useState([])
   const [messageInput, setMessageInput] = useState('')
+  const scrollRef = useRef()
+
+  const conversationRef = doc(db, 'conversations', 'messages')
   
   const handleDotsPress = () => {}
 
   const sendMessage = async () => {
     Keyboard.dismiss()
-
     
     let messageBody = {
       body: messageInput,
@@ -35,7 +48,7 @@ const ConversationScreen = ({ navigation, route }) => {
       to: "+12088812229"
     }
 
-    await setDoc(doc(db, 'messages', 'sent'), {
+    await addDoc(collection(conversationRef, route.params.contactName), {
       ...messageBody,
       timestamp: serverTimestamp()
     })
@@ -71,6 +84,21 @@ const ConversationScreen = ({ navigation, route }) => {
     })
   }, [navigation])
 
+  useLayoutEffect(() => {
+    const q = query(collection(conversationRef, route.params.contactName), orderBy('timestamp', 'asc'))
+
+    const unsub = onSnapshot(q, (snapshot) => {
+      setMessages(
+        snapshot.docs.map((doc) => ({
+          id: doc.id,
+          data: doc.data()
+        }))
+      )
+    })
+    // console.log(messages)
+    return unsub
+  }, [route])
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <KeyboardAvoidingView
@@ -80,8 +108,33 @@ const ConversationScreen = ({ navigation, route }) => {
       >
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
           <>
-            <ScrollView>
-
+            <ScrollView
+              automaticallyAdjustKeyboardInsets={true}
+              contentInset={{ bottom: 10 }}
+              keyboardDismissMode='on-drag'
+              scrollsToTop
+              ref={scrollRef}
+              onContentSizeChange={() => scrollRef.current.scrollToEnd()}
+            >
+              {messages.map(({id, data}) => (
+                data.from === '+13854627888' ? (
+                  <View key={id} style={styles.outbound}>
+                    <Text style={styles.outboundText}>{data.body}</Text>
+                  </View>
+                ) : (
+                  <View key={id} style={styles.inbound}>
+                    <Avatar
+                      rounded
+                      size={30}
+                      position='absolute'
+                      bottom={0}
+                      left={-37}
+                      source={route.params.contactPhoto}
+                    />
+                    <Text style={styles.inboundText}>{data.body}</Text>
+                  </View>
+                )
+              ))}
             </ScrollView>
 
             <View style={styles.footer}>
@@ -135,7 +188,34 @@ const styles = StyleSheet.create({
   sendBtn: {
     marginHorizontal: 10,
   },
-  chatWrapper: {},
-  inboundMessageWrapper: {},
-  outboundMessageWrapper: {},
+  outbound: {
+    backgroundColor: '#4f5d75',
+    padding: 12,
+    borderRadius: 18,
+    borderBottomRightRadius: 0,
+    alignSelf: 'flex-end',
+    marginVertical: 10,
+    marginHorizontal: 12,
+    maxWidth: '85%',
+    position: 'relative',
+  },
+  outboundText: {
+    color: '#fff',
+    fontSize: 14.5,
+  },
+  inbound: {
+    backgroundColor: '#bfc0c0',
+    padding: 12,
+    borderRadius: 18,
+    borderBottomLeftRadius: 0,
+    alignSelf: 'flex-start',
+    marginVertical: 10,
+    marginLeft: 47,
+    maxWidth: '80%',
+    position: 'relative',
+  },
+  inboundText: {
+    color: '#000',
+    fontSize: 14.5,
+  },
 })
