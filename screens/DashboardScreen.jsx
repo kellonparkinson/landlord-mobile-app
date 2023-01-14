@@ -1,7 +1,8 @@
-import { StyleSheet, Text, View, TextInput, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, TextInput, ScrollView, Pressable } from 'react-native'
 import React, { useState } from 'react'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 
-const DashboardScreen = () => {
+const DashboardScreen = ({ navigation }) => {
   const [numScheduled, setNumScheduled] = useState(0)
   const [unread, setUnread] = useState(0)
   const [username, setUsername] = useState('Kellon')
@@ -16,19 +17,39 @@ const DashboardScreen = () => {
           <TextInput style={styles.input} placeholder='Search' placeholderTextColor='#a4a4a4' />
       </View>
 
-      <View style={{ marginHorizontal: 12, marginTop: 12 }}>
+      <View style={{width: '100%', alignItems: 'center'}}>
+        <View style={styles.line}></View>
+      </View>
+
+      <View style={{ marginHorizontal: 12 }}>
         <Text style={styles.header}>Messaging Tools</Text>
       </View>
 
       <View style={styles.mainModWrapper}>
-        <View style={styles.module}>
-          <Text style={styles.subHeading}>Scheduler</Text>
+        <Pressable
+          style={styles.module}
+          onPress={() => navigation.navigate('Scheduler')}
+        >
+          <View style={styles.moduleHeader}>
+            <MaterialCommunityIcons name='lightning-bolt' size={30} color='#000' />
+            <Text style={styles.subHeading}>Scheduler</Text>
+          </View>
           <Text>{numScheduled} scheduled messages</Text>
-        </View>
+        </Pressable>
 
-        <View style={styles.module}>
-          <Text style={styles.subHeading}>Templates</Text>
-        </View>
+        <Pressable
+          style={styles.module}
+          onPress={() => navigation.navigate('Templates')}
+        >
+          <View style={styles.moduleHeader}>
+            <MaterialCommunityIcons name='message-bookmark' size={30} color='#000' />
+            <Text style={styles.subHeading}>Templates</Text>
+          </View>
+        </Pressable>
+      </View>
+
+      <View style={{width: '100%', alignItems: 'center'}}>
+        <View style={styles.line}></View>
       </View>
 
       <View style={styles.smallModWrapper}>
@@ -56,7 +77,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    height: 50
+    height: 50,
+    marginBottom: 16,
   },
   input: {
     width: '80%',
@@ -79,6 +101,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#d1ff17',
     borderRadius: 18,
     borderBottomRightRadius: 0,
+    padding: 12,
+  },
+  moduleHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   smallModWrapper: {
     width: '100%',
@@ -103,5 +130,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
     margin: 10,
+  },
+  line: {
+    width: '90%',
+    height: 2,
+    backgroundColor: '#686868',
+    marginBottom: 12,
   },
 })

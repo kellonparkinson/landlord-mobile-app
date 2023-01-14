@@ -11,6 +11,8 @@ import LoginScreen from "./screens/LoginScreen"
 import RegisterScreen from './screens/RegisterScreen'
 import ContactsScreen from './screens/ContactsScreen'
 import NewMessageScreen from "./screens/NewMessageScreen"
+import MessageTemplateScreen from "./screens/MessageTemplateScreen"
+import ScheduleMessageScreen from "./screens/ScheduleMessageScreen"
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -106,6 +108,18 @@ export default function App() {
           <Stack.Screen
             name="Conversation"
             component={ConversationScreen}
+          />
+
+          <Stack.Screen
+            name="Scheduler"
+            component={ScheduleMessageScreen}
+            options={{ title: 'Schedule Messages' }}
+          />
+          
+          <Stack.Screen
+            name="Templates"
+            component={MessageTemplateScreen}
+            options={{ title: 'Message Templates' }}
           />
 
           <Stack.Screen
