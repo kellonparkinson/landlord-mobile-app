@@ -19,10 +19,10 @@ const dummy = [
     },
     {
         id: 3,
-        firstName: 'Taylor',
-        lastName: 'Galbraith',
+        firstName: 'Dead',
+        lastName: 'Pool',
         message: "What's up man! How are things going? Been a while.",
-        contactPhoto: assets.walterwhite,
+        contactPhoto: assets.deadpool,
         time: '2:38pm',
     },
     {
@@ -30,7 +30,7 @@ const dummy = [
         firstName: 'Bruce',
         lastName: 'Wayne',
         message: "What's up man! How are things going? Been a while.",
-        contactPhoto: assets.deadpool,
+        contactPhoto: assets.batman,
         time: '2:38pm',
     },
     {
@@ -38,7 +38,7 @@ const dummy = [
         firstName: 'Bob',
         lastName: 'Belcher',
         message: "What's up man! How are things going? Been a while.",
-        contactPhoto: assets.walterwhite,
+        contactPhoto: assets.bobbelcher,
         time: '2:38pm',
     },
     {
@@ -46,7 +46,7 @@ const dummy = [
         firstName: 'Michael',
         lastName: 'Scott',
         message: "What's up man! How are things going? Been a while.",
-        contactPhoto: assets.deadpool,
+        contactPhoto: assets.prisonmike,
         time: '2:38pm',
     },
     {
@@ -54,7 +54,7 @@ const dummy = [
         firstName: 'John',
         lastName: 'Dutton',
         message: "What's up man! How are things going? Been a while.",
-        contactPhoto: assets.walterwhite,
+        contactPhoto: assets.johndutton,
         time: '2:38pm',
     },
     {
@@ -62,7 +62,7 @@ const dummy = [
         firstName: 'Sam',
         lastName: 'Bankman Fried',
         message: "What's up man! How are things going? Been a while.",
-        contactPhoto: assets.deadpool,
+        contactPhoto: assets.sbf,
         time: '2:38pm',
     },
     {
@@ -70,7 +70,7 @@ const dummy = [
         firstName: 'Vitalik',
         lastName: 'Buterin',
         message: "What's up man! How are things going? Been a while.",
-        contactPhoto: assets.walterwhite,
+        contactPhoto: assets.vitalik,
         time: '2:38pm',
     },
 ]

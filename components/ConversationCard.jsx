@@ -51,8 +51,8 @@ const styles = StyleSheet.create({
         width: 300,
     },
     contactIcon: {
-        width: 52,
-        height: 52,
+        width: 50,
+        height: 50,
         borderRadius: '50%',
         marginVertical: 5,
         marginEnd: 10,

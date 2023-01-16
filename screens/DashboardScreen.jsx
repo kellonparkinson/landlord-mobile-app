@@ -22,7 +22,7 @@ const DashboardScreen = ({ navigation }) => {
       </View>
 
       <View style={{ marginHorizontal: 12 }}>
-        <Text style={styles.header}>Messaging Tools</Text>
+        <Text style={styles.header}>Manager Tools</Text>
       </View>
 
       <View style={styles.mainModWrapper}>
@@ -31,7 +31,7 @@ const DashboardScreen = ({ navigation }) => {
           onPress={() => navigation.navigate('Scheduler')}
         >
           <View style={styles.moduleHeader}>
-            <MaterialCommunityIcons name='lightning-bolt' size={30} color='#000' />
+            <MaterialCommunityIcons name='lightning-bolt' size={40} color='#000' />
             <Text style={styles.subHeading}>Scheduler</Text>
           </View>
           <Text>{numScheduled} scheduled messages</Text>
@@ -42,8 +42,18 @@ const DashboardScreen = ({ navigation }) => {
           onPress={() => navigation.navigate('Templates')}
         >
           <View style={styles.moduleHeader}>
-            <MaterialCommunityIcons name='message-bookmark' size={30} color='#000' />
+            <MaterialCommunityIcons name='message-bookmark' size={40} color='#000' />
             <Text style={styles.subHeading}>Templates</Text>
+          </View>
+        </Pressable>
+
+        <Pressable
+          style={styles.module}
+          onPress={() => navigation.navigate('Properties')}
+        >
+          <View style={styles.moduleHeader}>
+            <MaterialCommunityIcons name='home-group' size={40} color='#000' />
+            <Text style={styles.subHeading}>Properties</Text>
           </View>
         </Pressable>
       </View>
@@ -61,6 +71,8 @@ const DashboardScreen = ({ navigation }) => {
           <Text style={styles.subHeading}>Settings</Text>
         </View>
       </View>
+
+      <View style={{height: 14, width: '100%'}}></View>
 
     </ScrollView>
   )
@@ -90,14 +102,14 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
   mainModWrapper: {
-    height: 450,
+    height: 650,
     width: '100%',
     justifyContent: 'space-evenly',
     alignItems: 'center',
   },
   module: {
-    width: '95%',
-    height: '45%',
+    width: '94%',
+    height: '30%',
     backgroundColor: '#d1ff17',
     borderRadius: 18,
     borderBottomRightRadius: 0,
@@ -118,7 +130,7 @@ const styles = StyleSheet.create({
     width: '46%',
     height: '100%',
     borderRadius: 18,
-    backgroundColor: '#bfc0c0'
+    backgroundColor: '#bfc0c0',
   },
   header: {
     color: '#fff',
