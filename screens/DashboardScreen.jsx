@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, TextInput, ScrollView, Pressable } from 'react-native'
 import React, { useState } from 'react'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 
 const DashboardScreen = ({ navigation }) => {
   const [numScheduled, setNumScheduled] = useState(0)
@@ -31,10 +31,16 @@ const DashboardScreen = ({ navigation }) => {
           onPress={() => navigation.navigate('Scheduler')}
         >
           <View style={styles.moduleHeader}>
-            <MaterialCommunityIcons name='lightning-bolt' size={40} color='#000' />
+            <MaterialCommunityIcons name='lightning-bolt' size={40} color='#242424' />
             <Text style={styles.subHeading}>Scheduler</Text>
           </View>
-          {/* <Text>{numScheduled} scheduled messages</Text> */}
+
+          <Text style={{marginHorizontal: 8, marginVertical: 12, fontSize: 16, fontWeight: '700', color: '#242424'}}>You have {numScheduled} scheduled messages</Text>
+
+          <View style={styles.addBtn}>
+              <MaterialIcons name='library-add' size={22} color='#d1ff17' />
+              <Text style={{marginHorizontal: 8, fontSize: 16, fontWeight: '700', color: '#d1ff17'}}>Add new</Text>
+            </View>
         </Pressable>
 
         <Pressable
@@ -42,9 +48,17 @@ const DashboardScreen = ({ navigation }) => {
           onPress={() => navigation.navigate('Templates')}
         >
           <View style={styles.moduleHeader}>
-            <MaterialCommunityIcons name='message-bookmark' size={40} color='#000' />
+            <MaterialCommunityIcons name='message-bookmark' size={40} color='#242424' />
             <Text style={styles.subHeading}>Templates</Text>
           </View>
+          <View style={styles.moduleInfo}>
+            <Text style={styles.modListItem}>Late Rent Policy</Text>
+            <Text style={styles.modListItem}>Application Qualifications</Text>
+          </View>
+            <View style={styles.addBtn}>
+              <MaterialIcons name='library-add' size={22} color='#d1ff17' />
+              <Text style={{marginHorizontal: 8, fontSize: 16, fontWeight: '700', color: '#d1ff17'}}>Add new</Text>
+            </View>
         </Pressable>
 
         <Pressable
@@ -52,9 +66,23 @@ const DashboardScreen = ({ navigation }) => {
           onPress={() => navigation.navigate('Properties')}
         >
           <View style={styles.moduleHeader}>
-            <MaterialCommunityIcons name='home-group' size={40} color='#000' />
+            <MaterialCommunityIcons name='home-group' size={40} color='#242424' />
             <Text style={styles.subHeading}>Properties</Text>
           </View>
+          <View style={styles.moduleInfo}>
+            <View style={{flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
+              <MaterialCommunityIcons name="home" size={22} color="#242424" />
+              <Text style={styles.modListItem}>153 Getrich Street</Text>
+            </View>
+            <View style={{flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
+              <MaterialCommunityIcons name="home" size={22} color="#242424" />
+              <Text style={styles.modListItem}>99 Cashflow Ln</Text>
+            </View>
+          </View>
+          <View style={styles.addBtn}>
+              <MaterialIcons name='playlist-add' size={22} color='#d1ff17' />
+              <Text style={{marginHorizontal: 8, fontSize: 16, fontWeight: '700', color: '#d1ff17'}}>Manage</Text>
+            </View>
         </Pressable>
       </View>
 
@@ -68,7 +96,7 @@ const DashboardScreen = ({ navigation }) => {
           onPress={() => navigation.navigate('Settings')}
         >
           <View style={styles.moduleHeader}>
-            <MaterialCommunityIcons name='cogs' size={40} color='#000' />
+            <MaterialCommunityIcons name='cogs' size={40} color='#242424' />
             <Text style={styles.subHeading}>Settings</Text>
           </View>
         </Pressable>
@@ -116,8 +144,11 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     borderBottomRightRadius: 0,
     padding: 12,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
   moduleHeader: {
+    width: '100%',
     flexDirection: 'row',
     alignItems: 'flex-start',
   },
@@ -141,10 +172,26 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   subHeading: {
-    color: '#000',
+    color: '#242424',
     fontSize: 22,
     fontWeight: '600',
     marginHorizontal: 10,
+  },
+  modListItem: {
+    color: '#242424',
+    fontSize: 16,
+    fontWeight: '600',
+    margin: 12,
+  },
+  addBtn: {
+    width: '45%',
+    flexDirection: 'row',
+    margin: 12,
+    backgroundColor: '#242424',
+    borderRadius: 18,
+    padding: 6,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   line: {
     width: '90%',

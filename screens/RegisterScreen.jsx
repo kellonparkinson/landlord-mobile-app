@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Pressable } from 'react-native'
+import { StyleSheet, Text, View, Pressable, KeyboardAvoidingView, Keyboard } from 'react-native'
 import React, { useState, useLayoutEffect } from 'react'
 import { Input, Image } from 'react-native-elements'
 import assets from '../data/dummyIndex'

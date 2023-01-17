@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Pressable } from 'react-native'
+import { StyleSheet, Text, View, Pressable, KeyboardAvoidingView, Keyboard } from 'react-native'
 import React, { useState, useRef, useLayoutEffect } from 'react'
 import { Input, Image } from 'react-native-elements'
 import assets from '../data/dummyIndex'
@@ -26,7 +26,11 @@ const LoginScreen = ({ navigation }) => {
   }, [navigation])
 
   return (
-    <View style={styles.screenWrapper}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.screenWrapper}
+      keyboardVerticalOffset={90}
+    >
       <Image
         source={assets.logoYellow}
         style={styles.logo}
@@ -69,7 +73,7 @@ const LoginScreen = ({ navigation }) => {
           <Text style={{ color: '#a4a4a4', fontSize: 20, fontWeight: '600' }}>Register</Text>
         </Pressable>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   )
 }
 
@@ -92,6 +96,9 @@ const styles = StyleSheet.create({
     inputContainer: {
       width: 250,
       marginBottom: 32,
+    },
+    input: {
+      color: '#fff'
     },
     btnWrapper: {
       width: '100%',

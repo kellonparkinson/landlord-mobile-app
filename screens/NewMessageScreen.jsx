@@ -20,7 +20,7 @@ const NewMessageScreen = ({ navigation }) => {
           <Text style={{ color: '#d1ff17', fontWeight: '600'}}>Cancel</Text>
         </Pressable>
     })
-  })
+  }, [navigation])
 
   const sendMessage = () => {
 
@@ -52,7 +52,7 @@ const NewMessageScreen = ({ navigation }) => {
                         style={styles.input}
                         value={messageInput}
                         onChangeText={(text) => setMessageInput(text)}
-                        placeholder='Message to schedule...'
+                        placeholder='Message...'
                         placeholderTextColor='#bfc0c0'
                         selectionColor={'#d1ff17'}
                       />
