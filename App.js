@@ -98,7 +98,7 @@ export default function App() {
       <StatusBar style="light"/>
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="Register"
+          initialRouteName="Login"
           screenOptions={stackScreenOptions}
         >
 
