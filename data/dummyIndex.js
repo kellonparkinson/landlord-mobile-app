@@ -1,5 +1,5 @@
 import walterwhite from '../assets/walterwhite.jpeg'
-import deadpool from '../assets/deadpool.png'
+import deadpool from '../assets/deadpool.jpeg'
 import sunset from '../assets/sunset.png'
 import kellon from '../assets/kellonface.png'
 import batman from '../assets/legobatman.png'
