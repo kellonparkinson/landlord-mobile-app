@@ -8,7 +8,7 @@ import {
     Keyboard,
     TouchableWithoutFeedback } from 'react-native'
 import React, { useLayoutEffect, useState } from 'react'
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
+import { Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 import axios from 'axios'
 import DatePicker, { getToday } from 'react-native-modern-datepicker'
 import { 
@@ -84,7 +84,8 @@ const NewScheduledMessageScreen = ({ navigation }) => {
                     selectedTextColor: '#242424',
                     mainColor: '#d1ff17',
                     textSecondaryColor: '#a4a4a4',
-                    textFontSize: 18
+                    textFontSize: 18,
+                    textHeaderFontSize: 20
                 }}
                 minimumDate={getToday()}
             />
@@ -115,7 +116,20 @@ const NewScheduledMessageScreen = ({ navigation }) => {
                             }
                         </Pressable>
                     </View>
-                ) : null}
+                ) : (
+                    <View style={styles.footer}>
+                        <TextInput
+                            style={styles.input}
+                            value={messageInput}
+                            onChangeText={(text) => setMessageInput(text)}
+                            placeholder='Fill out scheduling info first'
+                            placeholderTextColor='#bfc0c0'
+                        />
+                        <View style={styles.sendBtn}>
+                            <MaterialCommunityIcons name='message-off-outline' size={32} color='#686868' />
+                        </View>
+                    </View>
+                )}
                 </>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
