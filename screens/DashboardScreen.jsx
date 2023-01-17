@@ -80,7 +80,7 @@ const DashboardScreen = ({ navigation }) => {
             </View>
           </View>
           <View style={styles.addBtn}>
-              <MaterialIcons name='playlist-add' size={22} color='#d1ff17' />
+              <MaterialIcons name='view-list' size={22} color='#d1ff17' />
               <Text style={{marginHorizontal: 8, fontSize: 16, fontWeight: '700', color: '#d1ff17'}}>Manage</Text>
             </View>
         </Pressable>
@@ -186,7 +186,8 @@ const styles = StyleSheet.create({
   addBtn: {
     width: '45%',
     flexDirection: 'row',
-    margin: 12,
+    marginBottom: 18,
+    marginTop: 6,
     backgroundColor: '#242424',
     borderRadius: 18,
     padding: 6,

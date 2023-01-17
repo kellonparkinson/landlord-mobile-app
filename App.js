@@ -53,7 +53,7 @@ const Tabs = () => {
         tabBarInactiveTintColor: '#727272',
         tabBarStyle: {
           backgroundColor: '#242424',
-          height: 80,
+          height: 90,
           paddingTop: 10,
         },
         tabBarLabelStyle: {

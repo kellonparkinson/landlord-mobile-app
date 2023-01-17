@@ -10,7 +10,7 @@ const RegisterScreen = ({ navigation }) => {
   const [password, setPassword] = useState('')
 
   const handleRegister = () => {
-
+    navigation.navigate('Tabs')
   }
 
   useLayoutEffect(() => {
@@ -24,7 +24,11 @@ const RegisterScreen = ({ navigation }) => {
   }, [navigation])
 
   return (
-    <View style={styles.screenWrapper}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.screenWrapper}
+      keyboardVerticalOffset={90}
+    >
       <Image
         source={assets.logoYellow}
         style={styles.logo}
@@ -85,7 +89,7 @@ const RegisterScreen = ({ navigation }) => {
           <Text style={{ color: '#bfc0c0', fontSize: 20, fontWeight: '600' }}> Login</Text>
         </Pressable>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   )
 }
 
