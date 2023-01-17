@@ -1,5 +1,7 @@
 require('dotenv').config()
 const twilio = require('twilio')
+const schedule = require('node-schedule')
+
 const accountSid = process.env.TWILIO_ACCOUNT_SID
 const authToken = process.env.TWILIO_AUTH_TOKEN
 const client = new twilio(accountSid, authToken)
@@ -27,9 +29,21 @@ module.exports = {
                 console.log(message.sid)
                 res.send('Message sent!')
             })
-            // .catch((err) => {
-            //     console.log(err)
-            //     res.status(400).send('Error with twilio')
-            // })
     },
+    scheduleMessage: (req, res) => {
+        const { body, from, to } = req.body
+        const { selectedDate } = req.body
+        const date = new Date()
+
+        client.messages
+            .create({
+                body,
+                from,
+                to
+            })
+            .then((message) => {
+                console.log(message.sid)
+                res.send('Scheduled message sent successfully!')
+            })
+    }
 }

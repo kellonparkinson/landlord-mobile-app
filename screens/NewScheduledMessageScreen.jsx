@@ -40,10 +40,11 @@ const NewScheduledMessageScreen = ({ navigation }) => {
     const scheduleMessage = async () => {
         Keyboard.dismiss()
         
-        let messageBody = {
+        let scheduledMessageBody = {
           body: messageInput,
           from: "+13854627888",
-          to: recipient
+          to: recipient,
+          selectedDate: selectedDate
         }
     
         // await addDoc(collection(conversationRef, route.params.contactName), {
@@ -53,10 +54,11 @@ const NewScheduledMessageScreen = ({ navigation }) => {
         // })
     
         axios
-          .post('http://192.168.1.9:4000/schedule-sms', messageBody)
+          .post('http://192.168.1.9:4000/schedule-sms', scheduledMessageBody)
           .then((res) => {
             console.log(res.data)
             setMessageInput('')
+            navigation.navigate('Scheduler')
           })
           .catch((err) => console.log(err, 'AXIOS ERROR!!'))
     }
@@ -69,14 +71,18 @@ const NewScheduledMessageScreen = ({ navigation }) => {
                 value={recipient}
                 onChangeText={(text) => setRecipient(text)}
                 placeholder='Send to:'
-                placeholderTextColor='#242424'
+                placeholderTextColor='#bfc0c0'
+                selectionColor={'#d1ff17'}
             />
         </View>
 
         {/* <View style={styles.dateSelector}> */}
         <View>
             <DatePicker
-                onSelectedChange={(date) => setSelectedDate(date)}
+                onSelectedChange={(date) => {
+                    setSelectedDate(date)
+                    console.log(selectedDate)
+                }}
                 options={{
                     backgroundColor: '#3e3e3e',
                     textDefaultColor: '#fff',
@@ -106,6 +112,7 @@ const NewScheduledMessageScreen = ({ navigation }) => {
                             onChangeText={(text) => setMessageInput(text)}
                             placeholder='Message to schedule...'
                             placeholderTextColor='#bfc0c0'
+                            selectionColor={'#d1ff17'}
                         />
                         <Pressable style={styles.sendBtn} onPress={messageInput !== '' ? scheduleMessage : () => Keyboard.dismiss()}>
                             {messageInput === '' ? (
@@ -118,13 +125,9 @@ const NewScheduledMessageScreen = ({ navigation }) => {
                     </View>
                 ) : (
                     <View style={styles.footer}>
-                        <TextInput
-                            style={styles.input}
-                            value={messageInput}
-                            onChangeText={(text) => setMessageInput(text)}
-                            placeholder='Fill out scheduling info first'
-                            placeholderTextColor='#bfc0c0'
-                        />
+                        <View style={styles.disabledInput}>
+                            <Text style={{color: '#a4a4a4'}}>Fill out scheduling info first</Text>
+                         </View>
                         <View style={styles.sendBtn}>
                             <MaterialCommunityIcons name='message-off-outline' size={32} color='#686868' />
                         </View>
@@ -172,7 +175,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-evenly',
         padding: 10,
-        marginBottom: 10,
+        marginBottom: 20,
     },
     input: {
         bottom: 0,
@@ -191,5 +194,16 @@ const styles = StyleSheet.create({
     calendar: {
         margin: 12,
         backgroundColor: '#3e3e3e',
+    },
+    disabledInput: {
+        bottom: 0,
+        height: 40,
+        flex: 1,
+        backgroundColor: '#616161',
+        color: '#fff',
+        fontSize: 16,
+        borderRadius: 25,
+        padding: 12,
+        marginHorizontal: 10,
     },
 })

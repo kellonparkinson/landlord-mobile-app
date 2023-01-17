@@ -7,7 +7,7 @@ const server = express()
 server.use(express.json())
 server.use(cors())
 
-const { sendMessage } = require('./controllers/twilio')
+const { sendMessage, scheduleMessage } = require('./controllers/twilio')
 
 // Import the functions you need from the SDKs you need
 // import { initializeApp } from "firebase/app";
@@ -28,6 +28,11 @@ const { sendMessage } = require('./controllers/twilio')
 // const app = initializeApp(firebaseConfig);
 
 server.post('/send-sms', sendMessage)
+server.post('/schedule-sms', scheduleMessage)
+
+// const date = new Date('2023/01/24 09:30').toISOString()
+
+// console.log(date)
 
 
 server.listen(4000, console.log('Listening on 4000'))
