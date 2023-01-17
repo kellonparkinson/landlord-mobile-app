@@ -16,7 +16,7 @@ const RegisterScreen = ({ navigation }) => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
-        <Pressable onPress={() => navigation.goBack()}>
+        <Pressable onPress={() => navigation.navigate('Login')}>
           <MaterialIcons name='arrow-back-ios' size={24} color='#d1ff17'/>
         </Pressable>
       ),
@@ -65,7 +65,7 @@ const RegisterScreen = ({ navigation }) => {
           placeholderTextColor={'#bfc0c0'}
           selectionColor={'#d1ff17'}
           type='areacode'
-          onChangeText={(text) => setPassword(text)}
+          // onChangeText={(text) => setPassword(text)}
         />
       </View>
 

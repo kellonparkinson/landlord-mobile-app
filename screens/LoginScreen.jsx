@@ -5,8 +5,8 @@ import assets from '../data/dummyIndex'
 import { MaterialIcons } from '@expo/vector-icons'
 
 const LoginScreen = ({ navigation }) => {
-  // const [email, setEmail] = useState('')
-  // const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
   const emailRef = useRef()
   const passwordRef = useRef()
