@@ -1,10 +1,33 @@
-import { StyleSheet, Text, View, Pressable, TextInput, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback } from 'react-native'
+import {
+    StyleSheet,
+    Text,
+    View,
+    Pressable,
+    TextInput,
+    KeyboardAvoidingView,
+    Keyboard,
+    TouchableWithoutFeedback } from 'react-native'
 import React, { useLayoutEffect, useState } from 'react'
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
+import axios from 'axios'
+import DatePicker, { getToday } from 'react-native-modern-datepicker'
+import { 
+    doc,
+    addDoc,
+    getDocs,
+    getDoc,
+    updateDoc,
+    deleteDoc,
+    setDoc,
+    collection,
+    onSnapshot,
+    orderBy,
+    query } from '../FirebaseConfig'
 
 const NewScheduledMessageScreen = ({ navigation }) => {
     const [recipient, setRecipient] = useState('')
     const [messageInput, setMessageInput] = useState('')
+    const [selectedDate, setSelectedDate] = useState('')
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -12,10 +35,30 @@ const NewScheduledMessageScreen = ({ navigation }) => {
                 <Text style={{ color: '#d1ff17', fontWeight: '600'}}>Cancel</Text>
             </Pressable>
         })
-    })
+    }, [navigation])
 
-    const sendMessage = () => {
-
+    const scheduleMessage = async () => {
+        Keyboard.dismiss()
+        
+        let messageBody = {
+          body: messageInput,
+          from: "+13854627888",
+          to: recipient
+        }
+    
+        // await addDoc(collection(conversationRef, route.params.contactName), {
+        //   ...messageBody,
+        //   timestamp: serverTimestamp(),
+        //   scheduled: false
+        // })
+    
+        axios
+          .post('http://192.168.1.9:4000/schedule-sms', messageBody)
+          .then((res) => {
+            console.log(res.data)
+            setMessageInput('')
+          })
+          .catch((err) => console.log(err, 'AXIOS ERROR!!'))
     }
 
   return (
@@ -30,12 +73,28 @@ const NewScheduledMessageScreen = ({ navigation }) => {
             />
         </View>
 
-        <View style={styles.dateSelector}>
-            <Text>Date:</Text>
-            <MaterialCommunityIcons name='arrow-down-drop-circle' size={24} color='#d1ff17' />
+        {/* <View style={styles.dateSelector}> */}
+        <View>
+            <DatePicker
+                onSelectedChange={(date) => setSelectedDate(date)}
+                options={{
+                    backgroundColor: '#3e3e3e',
+                    textDefaultColor: '#fff',
+                    textHeaderColor: '#d1ff17',
+                    selectedTextColor: '#242424',
+                    mainColor: '#d1ff17',
+                    textSecondaryColor: '#a4a4a4',
+                    textFontSize: 18
+                }}
+                minimumDate={getToday()}
+            />
         </View>
 
-        <KeyboardAvoidingView style={styles.mainWrapper}>
+        <KeyboardAvoidingView
+            style={styles.mainWrapper}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            keyboardVerticalOffset={90}
+        >
             <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
                 <>
                 {recipient !== '' ? (
@@ -44,14 +103,14 @@ const NewScheduledMessageScreen = ({ navigation }) => {
                             style={styles.input}
                             value={messageInput}
                             onChangeText={(text) => setMessageInput(text)}
-                            placeholder='Message'
+                            placeholder='Message to schedule...'
                             placeholderTextColor='#bfc0c0'
                         />
-                        <Pressable style={styles.sendBtn} onPress={messageInput !== '' ? sendMessage : () => Keyboard.dismiss()}>
+                        <Pressable style={styles.sendBtn} onPress={messageInput !== '' ? scheduleMessage : () => Keyboard.dismiss()}>
                             {messageInput === '' ? (
-                                <Ionicons name='arrow-up-circle-outline' size={32} color='#bfc0c0' />
+                                <MaterialCommunityIcons name='clock-outline' size={32} color='#bfc0c0' />
                                 ) : (
-                                    <Ionicons name='arrow-up-circle-sharp' size={32} color='#d1ff17' />
+                                    <MaterialCommunityIcons name='clock' size={32} color='#d1ff17' />
                                 )
                             }
                         </Pressable>
@@ -114,5 +173,9 @@ const styles = StyleSheet.create({
     },
     sendBtn: {
         marginHorizontal: 10,
+    },
+    calendar: {
+        margin: 12,
+        backgroundColor: '#3e3e3e',
     },
 })

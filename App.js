@@ -15,6 +15,7 @@ import MessageTemplateScreen from "./screens/MessageTemplateScreen"
 import ScheduleMessageScreen from "./screens/ScheduleMessageScreen"
 import NewScheduledMessageScreen from "./screens/NewScheduledMessageScreen"
 import PropertiesScreen from "./screens/PropertiesScreen"
+import SettingsScreen from "./screens/SettingsScreen"
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -152,6 +153,12 @@ export default function App() {
             name="NewScheduledMessage"
             component={NewScheduledMessageScreen}
             options={{ title: 'New Scheduled Message'}}
+          />
+          
+          <Stack.Screen
+            name="Settings"
+            component={SettingsScreen}
+            options={{ title: 'Account Settings'}}
           />
 
         </Stack.Navigator>

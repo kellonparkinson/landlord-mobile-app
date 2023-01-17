@@ -34,7 +34,7 @@ const DashboardScreen = ({ navigation }) => {
             <MaterialCommunityIcons name='lightning-bolt' size={40} color='#000' />
             <Text style={styles.subHeading}>Scheduler</Text>
           </View>
-          <Text>{numScheduled} scheduled messages</Text>
+          {/* <Text>{numScheduled} scheduled messages</Text> */}
         </Pressable>
 
         <Pressable
@@ -63,13 +63,15 @@ const DashboardScreen = ({ navigation }) => {
       </View>
 
       <View style={styles.smallModWrapper}>
-        <View style={styles.smallModule}>
-          <Text style={styles.subHeading}>Manage Contacts</Text>
-        </View>
-
-        <View style={styles.smallModule}>
-          <Text style={styles.subHeading}>Settings</Text>
-        </View>
+        <Pressable
+          style={styles.smallModule}
+          onPress={() => navigation.navigate('Settings')}
+        >
+          <View style={styles.moduleHeader}>
+            <MaterialCommunityIcons name='cogs' size={40} color='#000' />
+            <Text style={styles.subHeading}>Settings</Text>
+          </View>
+        </Pressable>
       </View>
 
       <View style={{height: 14, width: '100%'}}></View>
@@ -117,7 +119,7 @@ const styles = StyleSheet.create({
   },
   moduleHeader: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
   },
   smallModWrapper: {
     width: '100%',
@@ -127,10 +129,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   smallModule: {
-    width: '46%',
+    width: '94%',
     height: '100%',
     borderRadius: 18,
     backgroundColor: '#bfc0c0',
+    padding: 12,
   },
   header: {
     color: '#fff',
@@ -139,9 +142,9 @@ const styles = StyleSheet.create({
   },
   subHeading: {
     color: '#000',
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: '600',
-    margin: 10,
+    marginHorizontal: 10,
   },
   line: {
     width: '90%',
