@@ -1,36 +1,52 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native'
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useLayoutEffect } from 'react'
 import { Input, Image } from 'react-native-elements'
+import assets from '../data/dummyIndex'
+import { MaterialIcons } from '@expo/vector-icons'
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
   // const [email, setEmail] = useState('')
   // const [password, setPassword] = useState('')
 
-  const usernameRef = useRef()
+  const emailRef = useRef()
   const passwordRef = useRef()
 
   const handleLogin = () => {
-
+    navigation.navigate('Tabs')
   }
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => (
+        <Pressable onPress={() => navigation.navigate('Register')}>
+          <MaterialIcons name='arrow-back-ios' size={24} color='#d1ff17'/>
+        </Pressable>
+      ),
+    })
+  }, [navigation])
 
   return (
     <View style={styles.screenWrapper}>
       <Image
-        source={require('../assets/sunset.png')}
+        source={assets.logoYellow}
         style={styles.logo}
       />
       <View style={styles.inputContainer}>
         <Input
           style={styles.input}
-          placeholder='Name'
-          type='name'
+          placeholder='Email'
+          placeholderTextColor={'#bfc0c0'}
+          selectionColor={'#d1ff17'}
+          type='email'
           autoFocus
           onChangeText={(text) => setEmail(text)}
-          ref={usernameRef}
+          ref={emailRef}
         />
         <Input
           style={styles.input}
           placeholder='Password'
+          placeholderTextColor={'#bfc0c0'}
+          selectionColor={'#d1ff17'}
           type='password'
           secureTextEntry
           onChangeText={(text) => setPassword(text)}
@@ -50,7 +66,7 @@ const LoginScreen = () => {
           style={styles.registerBtn}
           onPress={() => navigation.navigate('Register')}
         >
-          <Text style={{ color: '#242424', fontSize: 20, fontWeight: '400' }}>Register</Text>
+          <Text style={{ color: '#a4a4a4', fontSize: 20, fontWeight: '600' }}>Register</Text>
         </Pressable>
       </View>
     </View>
@@ -65,15 +81,17 @@ const styles = StyleSheet.create({
       wdith: '100%',
       justifyContent: 'center',
       alignItems: 'center',
+      backgroundColor: '#3e3e3e'
     },
     logo: {
-      width: 200,
-      height: 200,
+      width: 250,
+      height: 250,
       borderRadius: 18,
       marginBottom: 20,
     },
     inputContainer: {
       width: 250,
+      marginBottom: 32,
     },
     btnWrapper: {
       width: '100%',
@@ -91,6 +109,6 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
       borderBottomWidth: 2,
-      borderColor: '#e1e1e1'
+      borderColor: '#242424'
     },
 })

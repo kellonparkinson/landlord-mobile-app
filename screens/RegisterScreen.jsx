@@ -1,8 +1,10 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useLayoutEffect } from 'react'
 import { Input, Image } from 'react-native-elements'
+import assets from '../data/dummyIndex'
+import { MaterialIcons } from '@expo/vector-icons'
 
-const RegisterScreen = () => {
+const RegisterScreen = ({ navigation }) => {
   const [userName, setUserName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -11,16 +13,31 @@ const RegisterScreen = () => {
 
   }
 
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => (
+        <Pressable onPress={() => navigation.goBack()}>
+          <MaterialIcons name='arrow-back-ios' size={24} color='#d1ff17'/>
+        </Pressable>
+      ),
+    })
+  }, [navigation])
+
   return (
     <View style={styles.screenWrapper}>
       <Image
-        source={require('../assets/sunset.png')}
+        source={assets.logoYellow}
         style={styles.logo}
       />
+      <View>
+        <Text style={{fontSize: 32, color: '#fff', fontWeight: '600', marginBottom: 30}}>Welcome!</Text>
+      </View>
       <View style={styles.inputContainer}>
         <Input
           style={styles.input}
           placeholder='Name'
+          placeholderTextColor={'#bfc0c0'}
+          selectionColor={'#d1ff17'}
           type='username'
           autoFocus
           onChangeText={(text) => setUserName(text)}
@@ -28,14 +45,26 @@ const RegisterScreen = () => {
         <Input
           style={styles.input}
           placeholder='Email'
+          placeholderTextColor={'#bfc0c0'}
+          selectionColor={'#d1ff17'}
           type='email'
           onChangeText={(text) => setEmail(text)}
         />
         <Input
           style={styles.input}
           placeholder='Password'
+          placeholderTextColor={'#bfc0c0'}
+          selectionColor={'#d1ff17'}
           type='password'
           secureTextEntry
+          onChangeText={(text) => setPassword(text)}
+        />
+        <Input
+          style={styles.input}
+          placeholder='Preferred area code (e.g. 385, 208)'
+          placeholderTextColor={'#bfc0c0'}
+          selectionColor={'#d1ff17'}
+          type='areacode'
           onChangeText={(text) => setPassword(text)}
         />
       </View>
@@ -52,7 +81,8 @@ const RegisterScreen = () => {
           style={styles.loginBtn}
           onPress={() => navigation.navigate('Login')}
         >
-          <Text style={{ color: '#242424', fontSize: 20, fontWeight: '400' }}>Login</Text>
+          <Text style={{ color: '#242424', fontSize: 20, fontWeight: '600' }}>Already a member? </Text>
+          <Text style={{ color: '#bfc0c0', fontSize: 20, fontWeight: '600' }}> Login</Text>
         </Pressable>
       </View>
     </View>
@@ -67,15 +97,20 @@ const styles = StyleSheet.create({
       wdith: '100%',
       justifyContent: 'center',
       alignItems: 'center',
+      backgroundColor: '#3e3e3e'
     },
     logo: {
-      width: 200,
-      height: 200,
+      width: 180,
+      height: 180,
       borderRadius: 18,
       marginBottom: 20,
     },
     inputContainer: {
-      width: 250,
+      width: '85%',
+      marginBottom: 32,
+    },
+    input: {
+      width: '80%',
     },
     btnWrapper: {
       width: '100%',
@@ -90,9 +125,11 @@ const styles = StyleSheet.create({
     loginBtn: {
       width: '100%',
       height: 48,
+      flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
       borderBottomWidth: 2,
-      borderColor: '#e1e1e1'
+      borderColor: '#242424',
+      marginBottom: 22
     },
 })

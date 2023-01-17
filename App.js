@@ -98,7 +98,7 @@ export default function App() {
       <StatusBar style="light"/>
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="Tabs"
+          initialRouteName="Register"
           screenOptions={stackScreenOptions}
         >
 
