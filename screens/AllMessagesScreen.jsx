@@ -38,8 +38,7 @@ const AllMessagesScreen = ({ navigation }) => {
         )}
         showsVerticalScrollIndicator={false}
       />
-
-      {/* <Footer /> */}
+      
     </SafeAreaView>
   )
 }

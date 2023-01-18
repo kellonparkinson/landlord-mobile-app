@@ -1,9 +1,26 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native'
 import React, { useLayoutEffect, useState } from 'react'
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
+import { serverTimestamp } from 'firebase/firestore'
+import { db } from '../FirebaseConfig'
+import { 
+  doc,
+  addDoc,
+  getDocs,
+  getDoc,
+  updateDoc,
+  deleteDoc,
+  setDoc,
+  collection,
+  onSnapshot,
+  orderBy,
+  query } from '../FirebaseConfig'
 
 const ScheduleMessageScreen = ({ navigation }) => {
     const [numScheduled, setNumScheduled] = useState(0)
+    const [messages, setMessages] = useState([])
+
+    const conversationRef = doc(db, 'conversations', 'messages')
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -15,6 +32,21 @@ const ScheduleMessageScreen = ({ navigation }) => {
               ),
         })
     })
+
+    useLayoutEffect(() => {
+      const q = query(collection(conversationRef, 'Kellon Parkinson'), orderBy('timestamp', 'asc'))
+  
+      const unsub = onSnapshot(q, (snapshot) => {
+        setMessages(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            data: doc.data()
+          }))
+        )
+      })
+      // console.log(messages)
+      return unsub
+    }, [])
 
   return (
     <View style={styles.screenWrapper}>
@@ -28,12 +60,28 @@ const ScheduleMessageScreen = ({ navigation }) => {
       </Pressable>
 
       <View style={styles.header}>
-        <Text style={styles.headerTextLight}>Upcoming Scheduled Messages</Text>
+        <Text style={styles.headerTextLight}>Your recently scheduled messages:</Text>
       </View>
-
-      <View style={styles.header}>
-        <Text style={styles.headerTextLight}>Recently Sent from Scheduled</Text>
-      </View>
+        <View style={styles.messagesWrapper}>
+          {messages.map(({id, data}) => (
+            data.scheduled ? (
+              <>
+              <View style={{alignSelf: 'flex-end', marginRight: 20}}>
+                <Text style={styles.outboundText}>To: {data.to}</Text>
+              </View>
+              <View key={id} style={styles.outboundScheduled}>
+                <Text style={styles.outboundText}>{data.body}</Text>
+                  <MaterialCommunityIcons 
+                    style={{ alignSelf: 'flex-end', position: 'absolute', marginHorizontal: 12, bottom: -3, right: -32 }}
+                    name='lightning-bolt'
+                    size={16}
+                    color='#d1ff17'
+                  />
+              </View>
+              </>
+            ) : null
+          ))}
+        </View>
     </View>
   )
 }
@@ -71,5 +119,23 @@ const styles = StyleSheet.create({
         color: '#242424',
         fontSize: 18,
         fontWeight: '700',
+    },
+    outboundScheduled: {
+      backgroundColor: '#4f5d75',
+      borderWidth: 2,
+      borderColor: '#d1ff17',
+      padding: 12,
+      borderRadius: 18,
+      borderBottomRightRadius: 0,
+      alignSelf: 'flex-end',
+      marginTop: 5,
+      marginBottom: 25,
+      marginRight: 20,
+      maxWidth: '80%',
+      position: 'relative',
+    },
+    outboundText: {
+      color: '#fff',
+      fontSize: 14.5,
     },
 })
