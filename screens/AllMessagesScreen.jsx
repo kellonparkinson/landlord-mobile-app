@@ -1,18 +1,21 @@
-import { View, Text, FlatList, StyleSheet, SafeAreaView, Pressable } from 'react-native'
+import { View, Image, FlatList, StyleSheet, SafeAreaView, Pressable } from 'react-native'
 import React, { useLayoutEffect } from 'react'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import ConversationCard from '../components/ConversationCard'
 import dummy from '../data/dummyData'
+import assets from '../data/dummyIndex'
 
 const AllMessagesScreen = ({ navigation }) => {
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: () => <Pressable style={{ marginRight: 20 }} onPress={() => navigation.navigate('NewMessage')}>
-        <MaterialCommunityIcons name='pencil-outline' size={28} color='#d1ff17' />
-      </Pressable>
+      headerRight: () => (
+        <Pressable style={{ marginRight: 20 }} onPress={() => navigation.navigate('NewMessage')}>
+          <MaterialCommunityIcons name='pencil-outline' size={28} color='#d1ff17' />
+        </Pressable>
+      ),
     })
-  }, [])
+  }, [navigation])
   
   return (
     <SafeAreaView style={styles.screenWrapper}>

@@ -16,8 +16,7 @@ const {
 server.post('/send-sms', sendMessage)
 server.post('/schedule-sms', scheduleMessage)
 
-// const date = new Date('2023/01/24 09:30').toISOString()
-
+// let date = new Date()
 // console.log(date)
 
 

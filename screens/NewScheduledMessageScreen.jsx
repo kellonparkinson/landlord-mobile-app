@@ -11,6 +11,8 @@ import React, { useLayoutEffect, useState } from 'react'
 import { Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 import axios from 'axios'
 import DatePicker, { getToday } from 'react-native-modern-datepicker'
+import { serverTimestamp } from 'firebase/firestore'
+import { db } from '../FirebaseConfig'
 import { 
     doc,
     addDoc,
@@ -29,6 +31,8 @@ const NewScheduledMessageScreen = ({ navigation }) => {
     const [messageInput, setMessageInput] = useState('')
     const [selectedDate, setSelectedDate] = useState('')
 
+    const conversationRef = doc(db, 'conversations', 'messages')
+
     useLayoutEffect(() => {
         navigation.setOptions({
             headerLeft: () => <Pressable onPress={() => navigation.goBack()}>
@@ -37,10 +41,12 @@ const NewScheduledMessageScreen = ({ navigation }) => {
         })
     }, [navigation])
 
+    // This function should send data to server and set off a scheduled function,
+    // adding the message to the database once axios gets a response back from the twilio function
     const scheduleMessage = async () => {
         Keyboard.dismiss()
         
-        let scheduledMessageBody = {
+        const scheduledMessageBody = {
           body: messageInput,
           from: "+13854627888",
           to: recipient,
@@ -55,10 +61,15 @@ const NewScheduledMessageScreen = ({ navigation }) => {
     
         axios
           .post('http://192.168.1.9:4000/schedule-sms', scheduledMessageBody)
-          .then((res) => {
+          .then(async (res) => {
             console.log(res.data)
             setMessageInput('')
-            navigation.navigate('Scheduler')
+            await addDoc(collection(conversationRef, 'Kellon Parkinson'), {
+                ...scheduledMessageBody,
+                timestamp: serverTimestamp(),
+                scheduled: true
+            })
+            navigation.goBack()
           })
           .catch((err) => console.log(err, 'AXIOS ERROR!!'))
     }

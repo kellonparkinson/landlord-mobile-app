@@ -64,6 +64,21 @@ const ConversationScreen = ({ navigation, route }) => {
   }
 
   useLayoutEffect(() => {
+    const q = query(collection(conversationRef, route.params.contactName), orderBy('timestamp', 'asc'))
+
+    const unsub = onSnapshot(q, (snapshot) => {
+      setMessages(
+        snapshot.docs.map((doc) => ({
+          id: doc.id,
+          data: doc.data()
+        }))
+      )
+    })
+    // console.log(messages)
+    return unsub
+  }, [route])
+
+  useLayoutEffect(() => {
     navigation.setOptions({
       headerBackTitleVisible: false,
       headerTitle: () => (
@@ -84,21 +99,6 @@ const ConversationScreen = ({ navigation, route }) => {
       ),
     })
   }, [navigation])
-
-  useLayoutEffect(() => {
-    const q = query(collection(conversationRef, route.params.contactName), orderBy('timestamp', 'asc'))
-
-    const unsub = onSnapshot(q, (snapshot) => {
-      setMessages(
-        snapshot.docs.map((doc) => ({
-          id: doc.id,
-          data: doc.data()
-        }))
-      )
-    })
-    // console.log(messages)
-    return unsub
-  }, [route])
 
   return (
     <SafeAreaView style={styles.safeArea}>

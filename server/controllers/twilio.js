@@ -6,15 +6,6 @@ const accountSid = process.env.TWILIO_ACCOUNT_SID
 const authToken = process.env.TWILIO_AUTH_TOKEN
 const client = new twilio(accountSid, authToken)
 
-// Template for sending message
-// client.messages
-//   .create({
-//     body: "Hello from Twilio",
-//     from: "+17657197328",
-//     to: "+12088812229"
-//   })
-//   .then((message) => console.log(message.sid))
-
 module.exports = {
     sendMessage: (req, res) => {
         const { body, from, to } = req.body
@@ -33,9 +24,10 @@ module.exports = {
     scheduleMessage: (req, res) => {
         const { body, from, to } = req.body
         const { selectedDate } = req.body
-        const date = new Date()
+        const date = new Date(2023, 0, 17, 21, 26, 0)
 
-        client.messages
+        const job = schedule.scheduleJob(date, () => {
+            client.messages
             .create({
                 body,
                 from,
@@ -45,5 +37,6 @@ module.exports = {
                 console.log(message.sid)
                 res.send('Scheduled message sent successfully!')
             })
+        })
     }
 }
