@@ -33,8 +33,10 @@ const RegisterScreen = ({ navigation }) => {
         source={assets.logoYellow}
         style={styles.logo}
       />
-      <View>
-        <Text style={{fontSize: 32, color: '#fff', fontWeight: '600', marginBottom: 30}}>Welcome!</Text>
+      <View style={{flexDirection: 'row'}}>
+        <Text style={{fontSize: 32, color: '#fff', fontWeight: '600', marginBottom: 30}}>Welcome to </Text>
+        <Text style={{fontSize: 32, color: '#d1ff17', fontWeight: '600', marginBottom: 30}}>LanLo</Text>
+        <Text style={{fontSize: 32, color: '#fff', fontWeight: '600', marginBottom: 30}}>!</Text>
       </View>
       <View style={styles.inputContainer}>
         <Input
@@ -104,8 +106,8 @@ const styles = StyleSheet.create({
       backgroundColor: '#3e3e3e'
     },
     logo: {
-      width: 180,
-      height: 180,
+      width: 150,
+      height: 150,
       borderRadius: 18,
       marginTop: 10,
     },
@@ -115,6 +117,7 @@ const styles = StyleSheet.create({
     },
     input: {
       width: '80%',
+      color: '#fff'
     },
     btnWrapper: {
       width: '100%',

@@ -35,6 +35,10 @@ const LoginScreen = ({ navigation }) => {
         source={assets.logoYellow}
         style={styles.logo}
       />
+      <View style={{flexDirection: 'row'}}>
+        <Text style={{color: '#fff', fontSize: 40, fontWeight: '700', marginBottom: 10}}>Hello, </Text>
+        <Text style={{color: '#d1ff17', fontSize: 40, fontWeight: '700', marginBottom: 10}}>LanLo</Text>
+      </View>
       <View style={styles.inputContainer}>
         <Input
           style={styles.input}
@@ -73,6 +77,7 @@ const LoginScreen = ({ navigation }) => {
           <Text style={{ color: '#a4a4a4', fontSize: 20, fontWeight: '600' }}>Register</Text>
         </TouchableOpacity>
       </View>
+      <View style={{height: 50}}></View>
     </KeyboardAvoidingView>
   )
 }
@@ -91,11 +96,11 @@ const styles = StyleSheet.create({
       width: 250,
       height: 250,
       borderRadius: 18,
-      marginBottom: 20,
     },
     inputContainer: {
       width: 250,
       marginBottom: 32,
+      marginTop: 20
     },
     input: {
       color: '#fff'

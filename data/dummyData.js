@@ -5,7 +5,7 @@ const dummy = [
         id: 1,
         firstName: 'Kellon',
         lastName: 'Parkinson',
-        message: "What's up man! How are things going? Been a while.",
+        message: "Hey, just a reminder that the plumber is coming today at noon, if you could make sure the door is unlocked when he gets there. Thanks!",
         contactPhoto: assets.kellon,
         time: '2:38pm',
     },
