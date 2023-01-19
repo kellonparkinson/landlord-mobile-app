@@ -2,7 +2,7 @@ import {
   View,
   Text,
   StyleSheet,
-  Pressable,
+  TouchableOpacity,
   SafeAreaView,
   KeyboardAvoidingView,
   Keyboard,
@@ -88,14 +88,14 @@ const ConversationScreen = ({ navigation, route }) => {
         </View>
       ),
       headerLeft: () => (
-        <Pressable onPress={() => navigation.goBack()}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <MaterialIcons name='arrow-back-ios' size={24} color='#d1ff17'/>
-        </Pressable>
+        </TouchableOpacity>
       ),
       headerRight: () => (
-        <Pressable onPress={handleDotsPress}>
+        <TouchableOpacity onPress={handleDotsPress}>
           <MaterialCommunityIcons name='dots-horizontal' size={24} color='#d1ff17'/>
-        </Pressable>
+        </TouchableOpacity>
       ),
     })
   }, [navigation])
@@ -155,9 +155,9 @@ const ConversationScreen = ({ navigation, route }) => {
                     placeholder='Message'
                     placeholderTextColor='#bfc0c0'
                 />
-                <Pressable style={styles.sendBtn} onPress={messageInput !== '' ? sendMessage : () => Keyboard.dismiss()}>
+                <TouchableOpacity style={styles.sendBtn} onPress={messageInput !== '' ? sendMessage : () => Keyboard.dismiss()}>
                   {messageInput === '' ? <Ionicons name='arrow-up-circle-outline' size={32} color='#bfc0c0' /> : <Ionicons name='arrow-up-circle-sharp' size={32} color='#d1ff17' />}
-                </Pressable>
+                </TouchableOpacity>
             </View>
           </>
         </TouchableWithoutFeedback>

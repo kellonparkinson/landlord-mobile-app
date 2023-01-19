@@ -1,4 +1,4 @@
-import { View, Image, FlatList, StyleSheet, SafeAreaView, Pressable } from 'react-native'
+import { View, Image, FlatList, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native'
 import React, { useLayoutEffect } from 'react'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
@@ -10,9 +10,9 @@ const AllMessagesScreen = ({ navigation }) => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <Pressable style={{ marginRight: 20 }} onPress={() => navigation.navigate('NewMessage')}>
+        <TouchableOpacity style={{ marginRight: 20 }} onPress={() => navigation.navigate('NewMessage')}>
           <MaterialCommunityIcons name='pencil-outline' size={28} color='#d1ff17' />
-        </Pressable>
+        </TouchableOpacity>
       ),
     })
   }, [navigation])

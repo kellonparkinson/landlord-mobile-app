@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TextInput, ScrollView, Pressable } from 'react-native'
+import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 
@@ -26,7 +26,7 @@ const DashboardScreen = ({ navigation }) => {
       </View>
 
       <View style={styles.mainModWrapper}>
-        <Pressable
+        <TouchableOpacity
           style={styles.module}
           onPress={() => navigation.navigate('Scheduler')}
         >
@@ -41,9 +41,9 @@ const DashboardScreen = ({ navigation }) => {
               <MaterialIcons name='library-add' size={22} color='#d1ff17' />
               <Text style={{marginHorizontal: 8, fontSize: 16, fontWeight: '700', color: '#d1ff17'}}>Add new</Text>
             </View>
-        </Pressable>
+        </TouchableOpacity>
 
-        <Pressable
+        <TouchableOpacity
           style={styles.module}
           onPress={() => navigation.navigate('Templates')}
         >
@@ -59,9 +59,9 @@ const DashboardScreen = ({ navigation }) => {
               <MaterialIcons name='library-add' size={22} color='#d1ff17' />
               <Text style={{marginHorizontal: 8, fontSize: 16, fontWeight: '700', color: '#d1ff17'}}>Add new</Text>
             </View>
-        </Pressable>
+        </TouchableOpacity>
 
-        <Pressable
+        <TouchableOpacity
           style={styles.module}
           onPress={() => navigation.navigate('Properties')}
         >
@@ -83,7 +83,7 @@ const DashboardScreen = ({ navigation }) => {
               <MaterialIcons name='view-list' size={22} color='#d1ff17' />
               <Text style={{marginHorizontal: 8, fontSize: 16, fontWeight: '700', color: '#d1ff17'}}>Manage</Text>
             </View>
-        </Pressable>
+        </TouchableOpacity>
       </View>
 
       <View style={{width: '100%', alignItems: 'center'}}>
@@ -91,7 +91,7 @@ const DashboardScreen = ({ navigation }) => {
       </View>
 
       <View style={styles.smallModWrapper}>
-        <Pressable
+        <TouchableOpacity
           style={styles.smallModule}
           onPress={() => navigation.navigate('Settings')}
         >
@@ -99,7 +99,7 @@ const DashboardScreen = ({ navigation }) => {
             <MaterialCommunityIcons name='cogs' size={40} color='#242424' />
             <Text style={styles.subHeading}>Settings</Text>
           </View>
-        </Pressable>
+        </TouchableOpacity>
       </View>
 
       <View style={{height: 14, width: '100%'}}></View>

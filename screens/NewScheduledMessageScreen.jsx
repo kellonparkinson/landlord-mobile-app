@@ -2,12 +2,13 @@ import {
     StyleSheet,
     Text,
     View,
-    Pressable,
+    TouchableOpacity,
     TextInput,
+    ScrollView,
     KeyboardAvoidingView,
     Keyboard,
-    TouchableWithoutFeedback } from 'react-native'
-import React, { useLayoutEffect, useState } from 'react'
+    SafeAreaView } from 'react-native'
+import React, { useLayoutEffect, useState, useRef } from 'react'
 import { Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 import axios from 'axios'
 import DatePicker, { getToday } from 'react-native-modern-datepicker'
@@ -30,14 +31,15 @@ const NewScheduledMessageScreen = ({ navigation }) => {
     const [recipient, setRecipient] = useState('')
     const [messageInput, setMessageInput] = useState('')
     const [selectedDate, setSelectedDate] = useState('')
+    const scrollRef = useRef()
 
     const conversationRef = doc(db, 'conversations', 'messages')
 
     useLayoutEffect(() => {
         navigation.setOptions({
-            headerLeft: () => <Pressable onPress={() => navigation.goBack()}>
+            headerLeft: () => <TouchableOpacity onPress={() => navigation.goBack()}>
                 <Text style={{ color: '#d1ff17', fontWeight: '600'}}>Cancel</Text>
-            </Pressable>
+            </TouchableOpacity>
         })
     }, [navigation])
 
@@ -75,7 +77,7 @@ const NewScheduledMessageScreen = ({ navigation }) => {
     }
 
   return (
-    <View style={styles.screenWrapper}>
+    <SafeAreaView style={styles.screenWrapper}>
         <View>
             <TextInput
                 style={styles.toInput}
@@ -88,66 +90,74 @@ const NewScheduledMessageScreen = ({ navigation }) => {
         </View>
 
         {/* <View style={styles.dateSelector}> */}
-        <View>
-            <DatePicker
-                onSelectedChange={(date) => {
-                    setSelectedDate(date)
-                    console.log(selectedDate)
-                }}
-                options={{
-                    backgroundColor: '#3e3e3e',
-                    textDefaultColor: '#fff',
-                    textHeaderColor: '#d1ff17',
-                    selectedTextColor: '#242424',
-                    mainColor: '#d1ff17',
-                    textSecondaryColor: '#a4a4a4',
-                    textFontSize: 18,
-                    textHeaderFontSize: 20
-                }}
-                minimumDate={getToday()}
-            />
-        </View>
-
         <KeyboardAvoidingView
             style={styles.mainWrapper}
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             keyboardVerticalOffset={90}
-        >
-            <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-                <>
-                {recipient !== '' ? (
-                    <View style={styles.footer}>
-                        <TextInput
-                            style={styles.input}
-                            value={messageInput}
-                            onChangeText={(text) => setMessageInput(text)}
-                            placeholder='Message to schedule...'
-                            placeholderTextColor='#bfc0c0'
-                            selectionColor={'#d1ff17'}
-                        />
-                        <Pressable style={styles.sendBtn} onPress={messageInput !== '' ? scheduleMessage : () => Keyboard.dismiss()}>
-                            {messageInput === '' ? (
-                                <MaterialCommunityIcons name='clock-outline' size={32} color='#bfc0c0' />
-                                ) : (
-                                    <MaterialCommunityIcons name='clock' size={32} color='#d1ff17' />
-                                )
-                            }
-                        </Pressable>
-                    </View>
-                ) : (
-                    <View style={styles.footer}>
-                        <View style={styles.disabledInput}>
-                            <Text style={{color: '#a4a4a4'}}>Fill out scheduling info first</Text>
-                         </View>
-                        <View style={styles.sendBtn}>
-                            <MaterialCommunityIcons name='message-off-outline' size={32} color='#686868' />
+            >
+            <ScrollView
+                style={{flex: 1}}
+                automaticallyAdjustKeyboardInsets={true}
+                contentInset={{ bottom: 10 }}
+                keyboardDismissMode='on-drag'
+                scrollsToTop
+                ref={scrollRef}
+                onContentSizeChange={() => scrollRef.current.scrollToEnd()}
+            >
+            <View style={{flex: 1}}>
+                <DatePicker
+                    onSelectedChange={(date) => {
+                        setSelectedDate(date)
+                        console.log(selectedDate)
+                    }}
+                    options={{
+                        backgroundColor: '#3e3e3e',
+                        textDefaultColor: '#fff',
+                        textHeaderColor: '#d1ff17',
+                        selectedTextColor: '#242424',
+                        mainColor: '#d1ff17',
+                        textSecondaryColor: '#a4a4a4',
+                        textFontSize: 18,
+                        textHeaderFontSize: 20
+                    }}
+                    minimumDate={getToday()}
+                />
+            </View>
+            <View style={{height: 170}}></View>
+                    <>
+                    {recipient !== '' ? (
+                        <View style={styles.footer}>
+                            <TextInput
+                                style={styles.input}
+                                value={messageInput}
+                                onChangeText={(text) => setMessageInput(text)}
+                                placeholder='Message to schedule...'
+                                placeholderTextColor='#bfc0c0'
+                                selectionColor={'#d1ff17'}
+                            />
+                            <TouchableOpacity style={styles.sendBtn} onPress={messageInput !== '' ? scheduleMessage : () => Keyboard.dismiss()}>
+                                {messageInput === '' ? (
+                                    <MaterialCommunityIcons name='clock-outline' size={32} color='#bfc0c0' />
+                                    ) : (
+                                        <MaterialCommunityIcons name='clock' size={32} color='#d1ff17' />
+                                    )
+                                }
+                            </TouchableOpacity>
                         </View>
-                    </View>
-                )}
-                </>
-            </TouchableWithoutFeedback>
+                    ) : (
+                        <View style={styles.footer}>
+                            <View style={styles.disabledInput}>
+                                <Text style={{color: '#a4a4a4'}}>Fill out scheduling info first</Text>
+                            </View>
+                            <View style={styles.sendBtn}>
+                                <MaterialCommunityIcons name='message-off-outline' size={32} color='#686868' />
+                            </View>
+                        </View>
+                    )}
+                    </>
+            </ScrollView>
         </KeyboardAvoidingView>
-    </View>
+    </SafeAreaView>
   )
 }
 
@@ -160,8 +170,7 @@ const styles = StyleSheet.create({
     },
     mainWrapper: {
         flex: 1,
-        justifyContent: 'flex-end',
-        paddingBottom: 16,
+        justifyContent: 'space-between',
     },
     toInput: {
         width: '100%',
@@ -170,23 +179,15 @@ const styles = StyleSheet.create({
         backgroundColor: '#686868',
         color: '#fff',
     },
-    dateSelector: {
-        width: '100%',
-        height: 50,
-        marginTop: 2,
-        backgroundColor: '#686868',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: 12,
-    },
     footer: {
+        flex: 1,
         width: '100%',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-evenly',
         padding: 10,
-        marginBottom: 20,
+        position: 'relative',
+        bottom: 0,
     },
     input: {
         bottom: 0,

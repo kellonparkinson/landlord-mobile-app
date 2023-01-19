@@ -1,4 +1,4 @@
-import { View, Text, Image, Pressable, StyleSheet } from 'react-native'
+import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Avatar, ListItem } from 'react-native-elements'
 import { serverTimestamp } from 'firebase/firestore'
@@ -14,23 +14,23 @@ const ConversationCard = ({ data, onPress, route }) => {
     const [messagePreview, setMessagePreview] = useState('')
     const conversationRef = doc(db, 'conversations', 'messages')
 
-    useEffect(() => {
-        const q = query(collection(conversationRef, `${data.firstName} ${data.lastName}`), orderBy('timestamp', 'asc'))
+    // useLayoutEffect(() => {
+    //     const q = query(collection(conversationRef, `${data.firstName} ${data.lastName}`), orderBy('timestamp', 'asc'))
     
-        const unsub = onSnapshot(q, (snapshot) => {
-            const messageArray = snapshot.docs.map((doc) => ({
-                id: doc.id,
-                messageData: doc.data()
-              }))
-            console.log(messageArray.slice(-1)[0])
-            setMessagePreview(messageArray.slice(-1)[0])
-        })
-        // console.log(messages)
-        return unsub
-      }, [route])
+    //     const unsub = onSnapshot(q, (snapshot) => {
+    //         const messageArray = snapshot.docs.map((doc) => ({
+    //             id: doc.id,
+    //             messageData: doc.data()
+    //           }))
+    //         console.log(messageArray.slice(-1)[0])
+    //         setMessagePreview(messageArray.slice(-1)[0])
+    //     })
+    //     // console.log(messages)
+    //     return unsub
+    //   }, [route])
 
   return (
-    <Pressable onPress={onPress}>
+    <TouchableOpacity onPress={onPress}>
         <View style={styles.conversationCard}>
             <View style={styles.contactIcon}>
                 <Avatar
@@ -44,11 +44,11 @@ const ConversationCard = ({ data, onPress, route }) => {
                     {data.firstName} {data.lastName}
                 </ListItem.Title>
                 <ListItem.Subtitle numberOfLines={2} style={styles.cardText}>
-                    {/* {messagePreview.messageData.body} */}
+                    {data.message}
                 </ListItem.Subtitle>
             </ListItem.Content>
         </View>
-    </Pressable>
+    </TouchableOpacity>
   )
 }
 

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Pressable } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React, { useLayoutEffect, useState } from 'react'
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { serverTimestamp } from 'firebase/firestore'
@@ -26,15 +26,15 @@ const ScheduleMessageScreen = ({ navigation }) => {
         navigation.setOptions({
             headerBackTitleVisible: false,
             headerLeft: () => (
-                <Pressable onPress={() => navigation.goBack()}>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
                   <MaterialIcons name='arrow-back-ios' size={24} color='#d1ff17'/>
-                </Pressable>
+                </TouchableOpacity>
               ),
         })
     })
 
     useLayoutEffect(() => {
-      const q = query(collection(conversationRef, 'Kellon Parkinson'), orderBy('timestamp', 'asc'))
+      const q = query(collection(conversationRef, 'Kellon Parkinson'), orderBy('timestamp', 'desc'))
   
       const unsub = onSnapshot(q, (snapshot) => {
         setMessages(
@@ -43,6 +43,8 @@ const ScheduleMessageScreen = ({ navigation }) => {
             data: doc.data()
           }))
         )
+        // const schArray = messages.filter((item) => item.data.scheduled === true)
+        // setNumScheduled(schArray.length)
       })
       // console.log(messages)
       return unsub
@@ -50,14 +52,14 @@ const ScheduleMessageScreen = ({ navigation }) => {
 
   return (
     <View style={styles.screenWrapper}>
-      <View style={styles.header}>
+      {/* <View style={styles.header}>
         <Text style={styles.headerTextLight}>You have {numScheduled} scheduled messages.</Text>
-      </View>
+      </View> */}
 
-      <Pressable style={styles.newMessageBtn} onPress={() => navigation.navigate('NewScheduledMessage')}>
+      <TouchableOpacity style={styles.newMessageBtn} onPress={() => navigation.navigate('NewScheduledMessage')}>
         <Text style={styles.btnTextDark}>Schedule New Message</Text>
         <MaterialCommunityIcons name='message-text-clock-outline' size={50} color='#242424' />
-      </Pressable>
+      </TouchableOpacity>
 
       <View style={styles.header}>
         <Text style={styles.headerTextLight}>Your recently scheduled messages:</Text>
@@ -65,20 +67,20 @@ const ScheduleMessageScreen = ({ navigation }) => {
         <View style={styles.messagesWrapper}>
           {messages.map(({id, data}) => (
             data.scheduled ? (
-              <>
-              <View style={{alignSelf: 'flex-end', marginRight: 20}}>
-                <Text style={styles.outboundText}>To: {data.to}</Text>
+              <View key={id} style={{flex: 1}}>
+                <View style={{alignSelf: 'flex-end', marginRight: 20}}>
+                  <Text style={styles.outboundText}>To: {data.to}</Text>
+                </View>
+                <View style={styles.outboundScheduled}>
+                  <Text style={styles.outboundText}>{data.body}</Text>
+                    <MaterialCommunityIcons 
+                      style={{ alignSelf: 'flex-end', position: 'absolute', marginHorizontal: 12, bottom: -3, right: -32 }}
+                      name='lightning-bolt'
+                      size={16}
+                      color='#d1ff17'
+                    />
+                </View>
               </View>
-              <View key={id} style={styles.outboundScheduled}>
-                <Text style={styles.outboundText}>{data.body}</Text>
-                  <MaterialCommunityIcons 
-                    style={{ alignSelf: 'flex-end', position: 'absolute', marginHorizontal: 12, bottom: -3, right: -32 }}
-                    name='lightning-bolt'
-                    size={16}
-                    color='#d1ff17'
-                  />
-              </View>
-              </>
             ) : null
           ))}
         </View>
@@ -93,6 +95,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#3e3e3e',
         flex: 1,
         alignItems: 'center',
+        paddingTop: 32,
     },
     header: {
         width: '100%',
@@ -119,6 +122,9 @@ const styles = StyleSheet.create({
         color: '#242424',
         fontSize: 18,
         fontWeight: '700',
+    },
+    messagesWrapper: {
+      height: '60%'
     },
     outboundScheduled: {
       backgroundColor: '#4f5d75',

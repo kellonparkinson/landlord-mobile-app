@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Pressable, KeyboardAvoidingView, Keyboard } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, KeyboardAvoidingView, Keyboard } from 'react-native'
 import React, { useState, useLayoutEffect } from 'react'
 import { Input, Image } from 'react-native-elements'
 import assets from '../data/dummyIndex'
@@ -16,9 +16,9 @@ const RegisterScreen = ({ navigation }) => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
-        <Pressable onPress={() => navigation.navigate('Login')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
           <MaterialIcons name='arrow-back-ios' size={24} color='#d1ff17'/>
-        </Pressable>
+        </TouchableOpacity>
       ),
     })
   }, [navigation])
@@ -74,20 +74,20 @@ const RegisterScreen = ({ navigation }) => {
       </View>
 
       <View style={styles.btnWrapper}>
-        <Pressable
+        <TouchableOpacity
           style={styles.registerBtn}
           onPress={handleRegister}
         >
           <Text style={{ color: '#d1ff17', fontSize: 22, fontWeight: '600' }}>Register</Text>
-        </Pressable>
+        </TouchableOpacity>
 
-        <Pressable
+        <TouchableOpacity
           style={styles.loginBtn}
           onPress={() => navigation.navigate('Login')}
         >
           <Text style={{ color: '#242424', fontSize: 20, fontWeight: '600' }}>Already a member? </Text>
           <Text style={{ color: '#bfc0c0', fontSize: 20, fontWeight: '600' }}> Login</Text>
-        </Pressable>
+        </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
   )
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
       width: 180,
       height: 180,
       borderRadius: 18,
-      marginBottom: 20,
+      marginTop: 10,
     },
     inputContainer: {
       width: '85%',

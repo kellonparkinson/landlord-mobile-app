@@ -2,7 +2,7 @@ import {
   StyleSheet,
   Text,
   View,
-  Pressable,
+  TouchableOpacity,
   TextInput,
   KeyboardAvoidingView,
   Keyboard,
@@ -16,9 +16,9 @@ const NewMessageScreen = ({ navigation }) => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerLeft: () => <Pressable onPress={() => navigation.goBack()}>
+      headerLeft: () => <TouchableOpacity onPress={() => navigation.goBack()}>
           <Text style={{ color: '#d1ff17', fontWeight: '600'}}>Cancel</Text>
-        </Pressable>
+        </TouchableOpacity>
     })
   }, [navigation])
 
@@ -56,12 +56,12 @@ const NewMessageScreen = ({ navigation }) => {
                         placeholderTextColor='#bfc0c0'
                         selectionColor={'#d1ff17'}
                       />
-                        <Pressable style={styles.sendBtn} onPress={messageInput !== '' ? sendMessage : () => Keyboard.dismiss()}>
+                        <TouchableOpacity style={styles.sendBtn} onPress={messageInput !== '' ? sendMessage : () => Keyboard.dismiss()}>
                           {messageInput === '' ? (
                             <Ionicons name='arrow-up-circle-outline' size={32} color='#bfc0c0' />
                           ) : <Ionicons name='arrow-up-circle-sharp' size={32} color='#d1ff17' />
                           }
-                </Pressable>
+                        </TouchableOpacity>
                     </View>
                 ) : (
                     <View style={styles.footer}>
